@@ -34,7 +34,12 @@ public class Main
         Elements formulariosGET = doc.select("form[method= GET]");
         Elements parrafos = doc.select("p");
 
-        System.out.println("Hay " + doc.html().split("\n").length +" lineas" );
+      // org.jsoup.nodes.Document dom = Jsoup.parse(html);
+     //  String text = dom.text();
+
+    //   System.out.println("load from jsoup connect= " + es.size());
+
+        System.out.println("Hay " + doc.html().split("\\n").length +" lineas" );
         System.out.println("Hay " + parrafos.select("img").size() +" imagenes en los parrafos");
         System.out.println("Hay " + parrafos.size() +" parrafos");
 
@@ -62,12 +67,14 @@ public class Main
 
        for(Element f : formulariosPOST){
            int j= f.attr("action").length();
-           String action = f.attr("action") ;
+           String action = f.attr("action");
+          // f.absUrl("action");
+           //System.out.println(f.absUrl("action"));
            if(Character.toString(f.attr("action").charAt(0)).matches("."))
                action = f.attr("action").toString().substring(1,j);
 
-           Document d = Jsoup.connect(url + action).data("asignatura","practica1").post();
-          // Connection.Response d = Jsoup.connect(url + action).data("asignatura","practica1").method(Connection.Method.POST).execute();
+          Document d = Jsoup.connect(f.absUrl("action")).data("asignatura","practica1").post();
+          //Connection.Response d = Jsoup.connect(url + action).data("asignatura","practica1").method(Connection.Method.POST).execute();
            System.out.println(d);
        }
 

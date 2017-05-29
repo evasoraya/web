@@ -13,15 +13,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/jsoup-1.10.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$USER_HOME$/Desktop/commons-validator-1.6/commons-validator-1.6-tests.jar!/" />
           <root url="jar://$USER_HOME$/Desktop/commons-validator-1.6/commons-validator-1.6.jar!/" />
         </CLASSES>
