@@ -1,0 +1,24 @@
+group 'Practica2.1'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility =1.8
+targetCompatibility =1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile "com.sparkjava:spark-core:2.6.0" //add to build.gradle
+    compile 'com.sparkjava:spark-template-freemarker:2.5.5'
+    compile group: 'org.freemarker', name: 'freemarker', version: '2.3.14'
+    compile 'com.h2database:h2:1.4.191'
+    compile 'org.hibernate:hibernate-core:5.2.0.Final'
+
+    // Pagina Error para Skarp: https://github.com/perwendel/spark-debug-tools
+    compile 'com.sparkjava:spark-debug-tools:0.5'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.21'
+}
