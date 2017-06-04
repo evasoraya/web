@@ -94,12 +94,13 @@
                            ${a.getTitulo()}
                         </h2>
                         <h3 class="post-subtitle">
-                           ${a.getCuerpo().substring(0,30)}
+                           ${a.getCuerpo().substring(0,70)}
                         </h3>
                     </a>
-                    <p class="post-meta">Posted by <a href="#">${a.getAutor().getNombre()} ${a.getAutor().getApellido()}</a>${ a.getDate()}</p>
-                </div>
+                    <p class="post-meta">Posted by <a href="#">${a.getAutor().getNombre()} </a>${ a.getDate()}</p>
                 </#list>
+                </div>
+
                 <hr>
 
                 <hr>

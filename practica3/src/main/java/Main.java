@@ -19,8 +19,8 @@ import static spark.Spark.*;
  * Created by eva_c on 6/3/2017.
  */
 public class Main {
-    private static ArrayList<Articulo> articulos = new ArrayList<Articulo>();
-    private static ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+    private static ArrayList<Articulo> articulos = new ArrayList<>();
+    private static ArrayList<Usuario> usuarios = new ArrayList<>();
 
     public static Usuario loggedInUser = null;
     public static void main(String[] args) throws IOException {
@@ -72,7 +72,7 @@ public class Main {
         }, freeMarkerEngine);
 
         post("/crearArticulo", (req, res) -> {
-            DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.ENGLISH);
             Usuario u = buscarUsuario(req.queryParams("autor"));
             try {
                 Articulo a = new Articulo(
@@ -129,6 +129,7 @@ public class Main {
     private static void crearNuevoArticulo(Articulo a){
         articulos.add(a);
     }
+
     private static Usuario buscarUsuario (String nombre){
         for(Articulo a : articulos){
             if(a.getAutor().getNombre().equals(nombre)){
@@ -143,7 +144,6 @@ public class Main {
             if(username.equals(u.getUsername()) && password.equals(u.getPassword())) {
                loggedInUser = u;
                 return true;
-
             }
 
         }

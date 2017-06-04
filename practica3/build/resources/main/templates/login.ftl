@@ -54,9 +54,7 @@
                     <li>
                         <a href="/about">About</a>
                     </li>
-                    <li>
-                        <a href="/post">Sample Post</a>
-                    </li>
+
                     <li>
                         <a href="/regitrar">Regitrarse</a>
                     </li>
