@@ -8,6 +8,8 @@ public class Usuario {
     private boolean administrator;
     private boolean autor;
 
+    public Usuario(){}
+
     public Usuario(String usename, String nombre, String password, boolean administrator, boolean autor) {
         this.username = usename;
         this.nombre = nombre;
@@ -55,4 +57,6 @@ public class Usuario {
     public void setAutor(boolean autor) {
         this.autor = autor;
     }
+
+
 }
