@@ -43,7 +43,7 @@ public class Main {
         get("/post", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             Articulo a = new Articulo(
-                    Long.parseLong(req.queryParams("id")),
+                    0,
                     req.queryParams("titulo"),
                     req.queryParams("cuerpo"),
                    buscarUsuario( req.queryParams("usuario")),

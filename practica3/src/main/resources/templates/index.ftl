@@ -89,7 +89,7 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-preview">
                 <#list articulos as a>
-                    <a href="/post">
+                    <a href="/post/${a.getId}">
                         <h2 class="post-title">
                            ${a.getTitulo()}
                         </h2>
@@ -100,7 +100,7 @@
                        ${a.getCuerpo()}
                     </h4>
                     <#list a.getEtiquetas() as e>
-                      <input  name="etiquetas" type="text" value="e.getEtiqueta()" data-role="tagsinput" disabled/>
+                      <input  name="etiquetas" type="text" value="${e.getEtiqueta()}" data-role="tagsinput" disabled/>
                       </#list>
                 </#list>
                 </div>

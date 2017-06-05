@@ -74,7 +74,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="post-heading">
-                        <h1>Man must explore, and this is exploration at its greatest</h1>
+                        <h1>${articulo.getTitulo()}</h1>
                         <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
                         <span class="meta">Posted by <a href="#">Start Bootstrap</a> on August 24, 2014</span>
                     </div>
@@ -93,13 +93,13 @@
             </div>
         </div>
     </article>
-     <#list articulo.comentarios as c>
+     <#list articulo.getComentarios() as c>
 
             <h3 class="post-subtitle">
                 ${c.getComentario()}
             </h3>
 
-        <p class="post-meta">Posted by: ${c.getAutor().getNombre()}</p>
+
     </#list>
 
     </div>
@@ -110,8 +110,10 @@
        </div>
 
     </form>
+     <#list articulo.getEtiquetas() as e>
+                          <input  name="etiquetas" type="text" value="${e.getEtiqueta()}" data-role="tagsinput" disabled/>
+     </#list>
 
-  <input name="etiquetas" type="text" value=${articulo.etiquetas} data-role="tagsinput" disabled/>
     <hr>
 
     <!-- Footer -->

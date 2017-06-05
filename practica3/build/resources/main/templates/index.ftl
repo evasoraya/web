@@ -100,7 +100,7 @@
                        ${a.getCuerpo()}
                     </h4>
                     <#list a.getEtiquetas() as e>
-                      <input  name="etiquetas" type="text" value="e.getEtiqueta()" data-role="tagsinput" disabled/>
+                      <input  name="etiquetas" type="text" value="${e.getEtiqueta()}" data-role="tagsinput" disabled/>
                       </#list>
                 </#list>
                 </div>
