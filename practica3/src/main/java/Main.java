@@ -27,21 +27,17 @@ public class Main {
         FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine(configuration);
         port(4558);
 
-
         try {
             H2Services.startDb();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         DataBaseServices.getInstancia().testConexion();
-
         try {
             H2Services.crearTablas();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
         get("/index", (req, res) -> {
             ArticulosServices articulosServices = new ArticulosServices();
@@ -50,8 +46,6 @@ public class Main {
             model.put("articulos", articulos);
             return new ModelAndView(model, "index.ftl");
         }, freeMarkerEngine);
-
-
 
         get("/crearArticulo", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -93,6 +87,7 @@ public class Main {
                     req.queryParams("cuerpo"),
                     user,
                     current.toString());
+            //System.out.println(user.getNombre());
             String [] eti = req.queryParams("etiquetas").split(" ");
             Articulo art = crearNuevaEtiqueta(eti,a);
             crearNuevoArticulo(art);
@@ -108,18 +103,15 @@ public class Main {
 
 
         post("/login", (req, res) -> {
-            if(autentificacion(req.queryParams("usuario"),req.queryParams("password"))){
-                String usuario = req.queryParams("usuario");
-                if (usuario == null){
+            if(autentificacion(req.queryParams("username"),req.queryParams("password"))){
+                String usuario = req.queryParams("username");
+
                     req.session().attribute(SESSION_NAME, req.queryParams("usuario"));
                     res.redirect("/index");
-                }
+
              }
             return null;
         });
-
-
-
     }
     private static  void crearNuevoComentario(Comentario c, Articulo a) {
         //TODO arreglar eso.
@@ -132,32 +124,18 @@ public class Main {
 
     }
     private static Articulo crearNuevaEtiqueta(String[] e, Articulo a){
-        Articulo art = new Articulo();
-        ArrayList<Etiqueta> etiquetas = new ArrayList<>();
         EtiquetasServices etiquetasServices = new EtiquetasServices();
-
         for (String s : e){
             etiquetasServices.crearEtiqueta(new Etiqueta(s, a));
         }
-
-        a.setEtiquetas(etiquetas);
+        List<Etiqueta> etiquetas = etiquetasServices.listaEtiquetas();
+        a.setEtiquetas(new ArrayList<>(etiquetas));
         return a;
     }
     private static void crearNuevoArticulo(Articulo a){
         new ArticulosServices().crearArticulo(a);
     }
 
-    private static Usuario buscarUsuario (String nombre){
-        UsersServices usersServices = new UsersServices();
-        List<Usuario> usuarios = usersServices.listaUsuarios();
-        for(Usuario a : usuarios){
-            if(a.getNombre().equals(nombre)){
-                return a;
-            }
-
-        }
-        return  null;
-    }
     private static boolean autentificacion(String username, String password){
         List<Usuario> usuarios;
         UsersServices usersServices = new UsersServices();

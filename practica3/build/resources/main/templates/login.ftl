@@ -105,7 +105,7 @@
                                        <hr>
                                        <div class="row">
                                            <div class="col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-4 col-sm-offset-4 col-col-sm-6 col-xs-12">
-                                               <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-log-in"></span> Submit</button>
+                                               <button type="submit" class="btn btn-primary"> Submit</button>
                                            </div>
                                        </div>
 

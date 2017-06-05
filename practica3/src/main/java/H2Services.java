@@ -36,32 +36,32 @@ public class H2Services {
                 "  ADMINISTRADOR BOOLEAN NOT NULL,\n" +
                 "  AUTOR BOOLEAN NOT NULL);";
 
-        String sqlEtiqueta =
-                "CREATE TABLE IF NOT EXISTS ETIQUETA" +
-                        "(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-                        "NOMBRE VARCHAR(100) NOT NULL, " +
-                        "ARTICULO ID FOREIGN KEY REFERENCES ARTICULO(ID));";
-
-        String sqlComentario = "CREATE TABLE IF NOT EXISTS COMENTARIO\n" +
-                "(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,COMENTARIO VARCHAR(500) NOT NULL," +
-                "AUTOR VARCHAR(25) FOREIGN KEY REFERENCES USUARIO(USERNAME) NOT NULL," +
-                "ARTICULO INTEGER FOREIGN KEY REFERENCES ARTICULO(ID) NOT NULL);";
-
         String sqlArticulo = "CREATE TABLE IF NOT EXISTS ARTICULO\n" +
-                "(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,TITULO VARCHAR(100) NOT NULL," +
+                "(ID INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,TITULO VARCHAR(100) NOT NULL," +
                 "CUERPO VARCHAR(500) NOT NULL," +
-                "AUTOR INTEGER FOREIGN KEY REFERENCES USUARIO(USERNAME) NOT NULL," +
+                "AUTOR VARCHAR(25) NOT NULL, FOREIGN KEY (AUTOR) REFERENCES USUARIO(USERNAME)," +
                 "FECHA VARCHAR(30) NOT NULL);";
 
-        String sqlAdmin = "INSERT INTO USUARIO(USERNAME, NOMBRE, PASSWORD, ADMINISTRADOR, AUTOR)" +
-                " VALUES (\"admin\", \"Administrador\", \"admin\", TRUE, TRUE);";
+        String sqlComentario = "CREATE TABLE IF NOT EXISTS COMENTARIO\n" +
+                "(ID INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,COMENTARIO VARCHAR(500) NOT NULL," +
+                "AUTOR VARCHAR(25) NOT NULL, FOREIGN KEY (AUTOR) REFERENCES USUARIO(USERNAME)," +
+                "ARTICULO INTEGER NOT NULL, FOREIGN KEY (ARTICULO) REFERENCES ARTICULO(ID));";
+
+        String sqlEtiqueta =
+                "CREATE TABLE IF NOT EXISTS ETIQUETA" +
+                        "(ID INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL," +
+                        "NOMBRE VARCHAR(100) NOT NULL, " +
+                        "ARTICULO INTEGER NOT NULL, FOREIGN KEY (ARTICULO) REFERENCES ARTICULO(ID));";
+
+        String sqlAdmin = "INSERT INTO USUARIO (USERNAME, NOMBRE, PASSWORD, ADMINISTRADOR, AUTOR)" +
+                " VALUES ('admin', 'Administrador', 'admin', TRUE, TRUE);";
 
         Connection con = DataBaseServices.getInstancia().getConexion();
         Statement statement = con.createStatement();
         statement.execute(sqlUsuario);
+        statement.execute(sqlArticulo);
         statement.execute(sqlEtiqueta);
         statement.execute(sqlComentario);
-        statement.execute(sqlArticulo);
         statement.execute(sqlAdmin);
         statement.close();
         con.close();
