@@ -4,14 +4,11 @@ import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import static spark.Spark.*;
 
@@ -19,8 +16,8 @@ import static spark.Spark.*;
  * Created by eva_c on 6/3/2017.
  */
 public class Main {
-    private static ArrayList<Articulo> articulos = new ArrayList<>();
-    private static ArrayList<Usuario> usuarios = new ArrayList<>();
+    private static ArrayList<Articulo> articulos = new ArrayList<Articulo>();
+    private static ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 
     public static Usuario loggedInUser = null;
     public static void main(String[] args) throws IOException {
@@ -36,30 +33,27 @@ public class Main {
             return new ModelAndView(model, "index.ftl");
         }, freeMarkerEngine);
 
-        get("/index", (req, res) -> {
+
+
+        get("/crearArticulo", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-
-            DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
-            Articulo a = new Articulo(
-                                        req.queryParams("titulo"),
-                                        req.queryParams("Cuerpo"),
-                                        buscarUsuario(req.queryParams("titulo")),
-                                        df.parse(req.queryParams("titulo"))
-
-
-            );
-            model.put("articulos", articulos);
-            return new ModelAndView(model, "index.ftl");
+            return new ModelAndView(model, "crearArticulo.ftl");
         }, freeMarkerEngine);
 
-        get("/about", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return new ModelAndView(model, "about.ftl");
-        }, freeMarkerEngine);
         get("/post", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            Articulo a = new Articulo(
+                    Long.parseLong(req.queryParams("id")),
+                    req.queryParams("titulo"),
+                    req.queryParams("cuerpo"),
+                   buscarUsuario( req.queryParams("usuario")),
+                    req.queryParams("titulo")
+
+            );
+            model.put("articulo",a);
             return new ModelAndView(model, "post.ftl");
         }, freeMarkerEngine);
+
         get("/login", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return new ModelAndView(model, "login.ftl");
@@ -72,28 +66,34 @@ public class Main {
         }, freeMarkerEngine);
 
         post("/crearArticulo", (req, res) -> {
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.ENGLISH);
-            Usuario u = buscarUsuario(req.queryParams("autor"));
-            try {
+           Date current = new Date();
+
                 Articulo a = new Articulo(
+                        Long.parseLong(req.queryParams("id")),
                         req.queryParams("titulo"),
                         req.queryParams("cuerpo"),
-                        u,
-                        df.parse(req.queryParams("fecha"))
-                );
-                crearNuevaEtiqueta(req.queryParams("etiquetas").split(" "),a);
-                crearNuevoArticulo(a);
-            }catch (ParseException pe){
+                        loggedInUser,
+                        current.toString()
 
-            }
-            res.redirect("/home");
+                );
+                String [] eti = req.queryParams("etiquetas").split(" ");
+                System.out.println(eti.length);
+                Articulo art = crearNuevaEtiqueta(eti,a);
+                crearNuevoArticulo(art);
+
+            //System.out.println(a.getEtiquetas().size());
+            //System.out.println(articulos.get(0).getEtiquetas().get(0).getEtiqueta());
+
+            res.redirect("/index");
             return null;
         });
         post("/cometar", (req, res) -> {
             req.queryParams("comentario");
 
+
             return null;
         });
+
 
 
         post("/login", (req, res) -> {
@@ -115,25 +115,24 @@ public class Main {
         }
 
     }
-    private static void crearNuevaEtiqueta(String[] e, Articulo a){
-
-        for (Articulo ar : articulos) {
-            if (ar.getId() == a.getId()) {
-                for(String s : e){
-                    ar.etiquetas.add(new Etiqueta(s));
-                }
-
-            }
+    private static Articulo crearNuevaEtiqueta(String[] e, Articulo a){
+        Articulo art = new Articulo();
+        ArrayList<Etiqueta> etiquetas = new ArrayList<>();
+        for (String s : e){
+            etiquetas.add(new Etiqueta(s));
         }
+        a.setEtiquetas(etiquetas);
+
+        return a;
     }
     private static void crearNuevoArticulo(Articulo a){
         articulos.add(a);
     }
 
     private static Usuario buscarUsuario (String nombre){
-        for(Articulo a : articulos){
-            if(a.getAutor().getNombre().equals(nombre)){
-                return a.getAutor();
+        for(Usuario a : usuarios){
+            if(a.getNombre().equals(nombre)){
+                return a;
             }
 
         }
@@ -144,6 +143,7 @@ public class Main {
             if(username.equals(u.getUsername()) && password.equals(u.getPassword())) {
                loggedInUser = u;
                 return true;
+
             }
 
         }

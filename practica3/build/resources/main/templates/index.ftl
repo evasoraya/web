@@ -52,7 +52,7 @@
                         <a href="/index">Home</a>
                     </li>
                     <li>
-                        <a href="/about">About</a>
+                        <a href="/creararticulo">About</a>
                     </li>
                     <li>
                         <a href="/post">Sample Post</a>
@@ -93,11 +93,15 @@
                         <h2 class="post-title">
                            ${a.getTitulo()}
                         </h2>
-                        <h3 class="post-subtitle">
-                           ${a.getCuerpo().substring(0,70)}
-                        </h3>
+
                     </a>
-                    <p class="post-meta">Posted by <a href="#">${a.getAutor().getNombre()} </a>${ a.getDate()}</p>
+
+                    <h4 class="post-subtitle">
+                       ${a.getCuerpo()}
+                    </h4>
+                    <#list a.getEtiquetas() as e>
+                      <input  name="etiquetas" type="text" value="e.getEtiqueta()" data-role="tagsinput" disabled/>
+                      </#list>
                 </#list>
                 </div>
 

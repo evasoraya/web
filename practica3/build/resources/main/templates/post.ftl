@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -92,7 +93,7 @@
             </div>
         </div>
     </article>
-     <#list comentarios as c>
+     <#list articulo.comentarios as c>
 
             <h3 class="post-subtitle">
                 ${c.getComentario()}
@@ -100,6 +101,7 @@
 
         <p class="post-meta">Posted by: ${c.getAutor().getNombre()}</p>
     </#list>
+
     </div>
     <form action="comentar">
        <div class="form-group">
