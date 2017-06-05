@@ -48,18 +48,18 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                       <a href="/index">Home</a>
-                   </li>
                    <li>
-                       <a href="/about">About</a>
-                   </li>
-                   <li>
-                       <a href="/post">Sample Post</a>
-                   </li>
-                   <li>
-                       <a href="/registrar">Contact</a>
-                   </li>
+                                           <a href="/index">Home</a>
+                                       </li>
+                                       <li>
+                                           <a href="/crearArticulo">Crear articulo</a>
+                                       </li>
+                                       <li>
+                                           <a href="/post">Sample Post</a>
+                                       </li>
+                                       <li>
+                                           <a href="/registrar">Registrar</a>
+                                       </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -87,7 +87,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                 <form name="registration" id="contactForm" novalidate>
+                 <form name="registrar" id="registrar" >
                     <div class="row control-group">
                         <div class="form-group col-xs-12 floating-label-form-group controls">
                             <label>Nombre</label>

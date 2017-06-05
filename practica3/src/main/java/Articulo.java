@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by eva_c on 6/3/2017.
@@ -9,12 +10,14 @@ public class Articulo {
     private String titulo;
     private String cuerpo;
     private Usuario autor;
-    private Date fecha;
+    private String fecha;
     public ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
-    public   ArrayList<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
+    public ArrayList<Etiqueta> etiquetas= new ArrayList<Etiqueta>();
 
-    public Articulo(/*long id*/ String titulo, String cuerpo, Usuario autor, Date fecha /*ArrayList<Etiqueta> etiquetas*/) {
-       // this.id = id;
+    public Articulo(){}
+
+    public Articulo(long id, String titulo, String cuerpo, Usuario autor, String fecha /*ArrayList<Etiqueta> etiquetas*/) {
+       this.id = id;
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.autor = autor;
@@ -54,11 +57,11 @@ public class Articulo {
         this.autor = autor;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

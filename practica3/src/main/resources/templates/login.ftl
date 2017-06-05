@@ -52,7 +52,7 @@
                         <a href="/index">Home</a>
                     </li>
                     <li>
-                        <a href="/about">About</a>
+                        <a href="/crearArticulo">Crear articulo</a>
                     </li>
 
                     <li>

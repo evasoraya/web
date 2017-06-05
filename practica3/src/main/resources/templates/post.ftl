@@ -93,7 +93,7 @@
             </div>
         </div>
     </article>
-     <#list comentarios as c>
+     <#list articulo.comentarios as c>
 
             <h3 class="post-subtitle">
                 ${c.getComentario()}
@@ -101,6 +101,7 @@
 
         <p class="post-meta">Posted by: ${c.getAutor().getNombre()}</p>
     </#list>
+
     </div>
     <form action="comentar">
        <div class="form-group">

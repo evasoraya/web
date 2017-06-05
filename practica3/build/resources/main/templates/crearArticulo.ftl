@@ -49,16 +49,16 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="index.html">Home</a>
+                        <a href="/index">Home</a>
                     </li>
                     <li>
-                        <a href="about.html">About</a>
+                        <a href="/crearArticulo">Crear articulo</a>
                     </li>
                     <li>
-                        <a href="post.html">Sample Post</a>
+                        <a href="/post">Sample Post</a>
                     </li>
                     <li>
-                        <a href="contact.html">Contact</a>
+                        <a href="/registrar">Registrar</a>
                     </li>
                 </ul>
             </div>
@@ -84,15 +84,44 @@
     </header>
 
     <!-- Main Content -->
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius praesentium recusandae illo eaque architecto error, repellendus iusto reprehenderit, doloribus, minus sunt. Numquam at quae voluptatum in officia voluptas voluptatibus, minus!</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum molestiae debitis nobis, quod sapiente qui voluptatum, placeat magni repudiandae accusantium fugit quas labore non rerum possimus, corrupti enim modi! Et.</p>
-            </div>
-        </div>
-    </div>
+      <div class="container">
+               <div class="row">
+                   <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <form name="crearArticulo" id="crearArticulo" action="/crearArticulo" method = "POST">
+                           <div class="row control-group " >
+                               <div class="form-group col-xs-12 floating-label-form-group controls">
+                                   <label>Titulo</label>
+                                   <input type="number" name="id">
+                                   <input type="text" class="form-control" name="titulo" placeholder="Titulo" id="titulo" required data-validation-required-message="introduzca el nombre del articulo">
+                                   <p class="help-block text-danger"></p>
+                               </div>
+                           </div>
+                           <div class="row control-group ">
+                               <div class="form-group col-xs-12 floating-label-form-group controls">
+                                   <label>Cuerpo</label>
+                                    <textarea name="cuerpo" placeholder="Cuerpo" name="cuerpo" id="cuerpo" class="form-control" rows="4" cols="50"></textarea>
+                                   <p class="help-block text-danger"></p>
+                               </div>
+                           </div>
+                           <div class="row control-group ">
+                               <div class="form-group col-xs-12 floating-label-form-group controls">
+                                   <label>Etiquetas</label>
+                                   <input  name="etiquetas" type="text" placeholder="Etiquetas" data-role="tagsinput" />
+                                   <p class="help-block text-danger"></p>
+                               </div>
+                           </div>
+
+                           <br>
+                           <div id="success"></div>
+                           <div class="row">
+                               <div class="form-group col-xs-12">
+                                   <button type="submit" class="btn btn-default">Send</button>
+                               </div>
+                           </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
 
     <hr>
 
