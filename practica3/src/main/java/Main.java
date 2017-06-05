@@ -6,6 +6,7 @@ import spark.template.freemarker.FreeMarkerEngine;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,6 +26,21 @@ public class Main {
         configuration.setClassForTemplateLoading(Main.class, "/templates");
         FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine(configuration);
         port(4558);
+
+
+        try {
+            H2Services.startDb();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        DataBaseServices.getInstancia().testConexion();
+
+        try {
+            H2Services.crearTablas();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 
         get("/index", (req, res) -> {
@@ -79,10 +95,9 @@ public class Main {
             res.redirect("/index");
             return null;
         });
+
         post("/cometar", (req, res) -> {
             req.queryParams("comentario");
-
-
             return null;
         });
 
@@ -115,13 +130,13 @@ public class Main {
     private static Articulo crearNuevaEtiqueta(String[] e, Articulo a){
         Articulo art = new Articulo();
         ArrayList<Etiqueta> etiquetas = new ArrayList<>();
-        ArticulosServices articulosServices = new ArticulosServices();
+        EtiquetasServices etiquetasServices = new EtiquetasServices();
 
         for (String s : e){
-            etiquetas.add(new Etiqueta());
+            etiquetasServices.crearEtiqueta(new Etiqueta(s, a));
         }
-        a.setEtiquetas(etiquetas);
 
+        a.setEtiquetas(etiquetas);
         return a;
     }
     private static void crearNuevoArticulo(Articulo a){
