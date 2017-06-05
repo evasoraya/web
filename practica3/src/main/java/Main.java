@@ -75,8 +75,9 @@ public class Main {
         post("/crearArticulo", (req, res) -> {
             Date current = new Date();
             UsersServices usersServices = new UsersServices();
+            System.out.println(req.session().attributes().size());
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
-
+            System.out.println(user.getUsername());
             Articulo a = new Articulo(
                     Long.parseLong(req.queryParams("id")),
                     req.queryParams("titulo"),
@@ -95,28 +96,25 @@ public class Main {
             return null;
         });
 
-
-
         post("/login", (req, res) -> {
-            if(autentificacion(req.queryParams("usuario"),req.queryParams("password"))){
-                String usuario = req.queryParams("usuario");
-                if (usuario == null){
-                    req.session().attribute(SESSION_NAME, req.queryParams("usuario"));
-                    res.redirect("/index");
-                }
+            if(autentificacion(req.queryParams("username"),req.queryParams("password"))){
+                req.session().attribute(SESSION_NAME, req.queryParams("username"));
+                res.redirect("/index");
              }
             return null;
         });
     }
     private static  void crearNuevoComentario(Comentario c, Articulo a) {
         //TODO arreglar eso.
+
+
+
         List<Articulo> articulos = new ArrayList<>();
         for (Articulo ar : articulos) {
             if (ar.getId() == a.getId()) {
                 ar.comentarios.add(c);
             }
         }
-
     }
     private static Articulo crearNuevaEtiqueta(String[] e, Articulo a){
         EtiquetasServices etiquetasServices = new EtiquetasServices();
@@ -135,6 +133,7 @@ public class Main {
         List<Usuario> usuarios;
         UsersServices usersServices = new UsersServices();
         usuarios = usersServices.listaUsuarios();
+        System.out.println(usuarios.size());
         for(Usuario u : usuarios){
             if(username.equals(u.getUsername()) && password.equals(u.getPassword())) {
                 return true;
