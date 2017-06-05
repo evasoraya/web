@@ -1,14 +1,9 @@
 import freemarker.template.Configuration;
-import javafx.beans.property.LongPropertyBase;
-import org.h2.engine.User;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -27,6 +22,7 @@ public class Main {
         FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine(configuration);
         port(4558);
 
+        //region Subir Base de datos.
         try {
             H2Services.startDb();
         } catch (SQLException e) {
@@ -38,16 +34,12 @@ public class Main {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        //endregion
 
         get("/index", (req, res) -> {
             ArticulosServices articulosServices = new ArticulosServices();
             List<Articulo> articulos = articulosServices.listaArticulos();
             Map<String, Object> model = new HashMap<>();
-
-            for (Articulo a : articulos){
-                System.out.println("......................"
-                        +a.getTitulo()+" "+ a.getId() + " "+ a.getCuerpo()+ " "+ a.getAutor().getNombre() + " "+ a.getFecha());
-            }
 
             model.put("articulos", articulos);
             return new ModelAndView(model, "index.ftl");
@@ -59,13 +51,9 @@ public class Main {
         }, freeMarkerEngine);
 
 
-
-
         get("/post/:id", (req, res) -> {
             System.out.println(req.params("id"));
-
             int id = Integer.parseInt(req.params("id"));
-
             ArticulosServices articulosServices = new ArticulosServices();
             Articulo articulo = articulosServices.getArticulo(id);
             Map<String, Object> model = new HashMap<>();
@@ -85,19 +73,18 @@ public class Main {
         }, freeMarkerEngine);
 
         post("/crearArticulo", (req, res) -> {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss z");
             Date current = new Date();
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
             Articulo a = new Articulo(
-
                     req.queryParams("titulo"),
                     req.queryParams("cuerpo"),
                     user,
-                    current.toString());
-            //System.out.println(user.getNombre());
+                    dateFormat.format(current));
             String [] eti = req.queryParams("etiquetas").split(" ");
-            Articulo art = crearNuevaEtiqueta(eti,a);
-            crearNuevoArticulo(art);
+            a.setEtiquetasList(eti);
+            new ArticulosServices().crearArticulo(a);
             res.redirect("/index");
             return null;
         });
@@ -108,48 +95,11 @@ public class Main {
         });
 
         post("/login", (req, res) -> {
-            if(autentificacion(req.queryParams("username"),req.queryParams("password"))){
-
-                String usuario = req.queryParams("username");
-
+            if(Usuario.autentificar(req.queryParams("username"),req.queryParams("password"))){
                 req.session().attribute(SESSION_NAME, req.queryParams("username"));
                 res.redirect("/index");
-
              }
             return null;
         });
     }
-    private static void crearNuevoComentario(Comentario c, Articulo a) {
-        c.setArticulo(a);
-        ComentariosServices comentariosServices = new ComentariosServices();
-        comentariosServices.crearComentario(c);
-        List<Comentario> comentarios = comentariosServices.getArticulosComments(a.getId());
-        a.setComentarios(new ArrayList<>(comentarios));
-    }
-    private static Articulo crearNuevaEtiqueta(String[] e, Articulo a){
-        EtiquetasServices etiquetasServices = new EtiquetasServices();
-        for (String s : e){
-            etiquetasServices.crearEtiqueta(new Etiqueta(s, a));
-        }
-        List<Etiqueta> etiquetas = etiquetasServices.listaEtiquetas();
-        a.setEtiquetas(new ArrayList<>(etiquetas));
-        return a;
-    }
-    private static void crearNuevoArticulo(Articulo a){
-        new ArticulosServices().crearArticulo(a);
-    }
-
-    private static boolean autentificacion(String username, String password){
-        List<Usuario> usuarios;
-        UsersServices usersServices = new UsersServices();
-        usuarios = usersServices.listaUsuarios();
-        System.out.println(usuarios.size());
-        for(Usuario u : usuarios){
-            if(username.equals(u.getUsername()) && password.equals(u.getPassword())) {
-                return true;
-            }
-        }
-      return false;
-    }
-
 }

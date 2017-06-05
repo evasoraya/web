@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * Created by eva_c on 6/3/2017.
  */
@@ -59,4 +61,16 @@ public class Usuario {
     }
 
 
+    public static boolean autentificar(String username, String password){
+        List<Usuario> usuarios;
+        UsersServices usersServices = new UsersServices();
+        usuarios = usersServices.listaUsuarios();
+        System.out.println(usuarios.size());
+        for(Usuario u : usuarios){
+            if(username.equals(u.getUsername()) && password.equals(u.getPassword())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
