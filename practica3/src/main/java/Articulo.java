@@ -16,8 +16,8 @@ public class Articulo {
 
     public Articulo(){}
 
-    public Articulo(long id, String titulo, String cuerpo, Usuario autor, String fecha /*ArrayList<Etiqueta> etiquetas*/) {
-       this.id = id;
+    public Articulo( String titulo, String cuerpo, Usuario autor, String fecha /*ArrayList<Etiqueta> etiquetas*/) {
+
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.autor = autor;

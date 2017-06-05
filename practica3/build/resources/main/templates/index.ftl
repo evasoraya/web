@@ -52,13 +52,13 @@
                         <a href="/index">Home</a>
                     </li>
                     <li>
-                        <a href="/creararticulo">About</a>
+                        <a href="/crearArticulo">Crear Articulo</a>
                     </li>
                     <li>
-                        <a href="/post">Sample Post</a>
+                        <a href="/post">Post</a>
                     </li>
                     <li>
-                        <a href="/regitrar">Contact</a>
+                        <a href="/regitrar">Registrar</a>
                     </li>
                 </ul>
             </div>
@@ -89,19 +89,26 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-preview">
                 <#list articulos as a>
-                    <a href="/post/${a.getId}">
+
+                    <a href="/post/${a.getId()}">
                         <h2 class="post-title">
                            ${a.getTitulo()}
                         </h2>
 
                     </a>
+                    <h5> Posted by: ${a.getAutor().getNombre()}, ${ a.getFecha()} </h5>
 
                     <h4 class="post-subtitle">
                        ${a.getCuerpo()}
+                       <br>
+
+
+
                     </h4>
                     <#list a.getEtiquetas() as e>
                       <input  name="etiquetas" type="text" value="${e.getEtiqueta()}" data-role="tagsinput" disabled/>
                       </#list>
+
                 </#list>
                 </div>
 

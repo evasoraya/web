@@ -23,6 +23,7 @@ public class ArticulosServices {
                 articulo.setId(rs.getInt("ID"));
                 articulo.setTitulo(rs.getString("TITULO"));
                 articulo.setFecha(rs.getString("FECHA"));
+                articulo.setCuerpo(rs.getString("CUERPO"));
                 UsersServices usersServices = new UsersServices();
                 Usuario autor = usersServices.getUsuario(rs.getString("AUTOR"));
                 articulo.setAutor(autor);
@@ -92,7 +93,6 @@ public class ArticulosServices {
             prepareStatement.setString(4, articulo.getFecha());
             int fila = prepareStatement.executeUpdate();
             ok = fila > 0 ;
-
         } catch (SQLException ex) {
             Logger.getLogger(ArticulosServices.class.getName()).log(Level.SEVERE, null, ex);
         } finally{

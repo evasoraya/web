@@ -47,19 +47,19 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="index.html">Home</a>
-                    </li>
-                    <li>
-                        <a href="about.html">About</a>
-                    </li>
-                    <li>
-                        <a href="post.html">Sample Post</a>
-                    </li>
-                    <li>
-                        <a href="contact.html">Contact</a>
-                    </li>
-                </ul>
+                     <li>
+                       <a href="/index">Home</a>
+                   </li>
+                   <li>
+                       <a href="/crearArticulo">Crear Articulo</a>
+                   </li>
+                   <li>
+                       <a href="/post">Post</a>
+                   </li>
+                   <li>
+                       <a href="/regitrar">Registrar</a>
+                   </li>
+</ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -74,8 +74,8 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="post-heading">
                         <h1>${articulo.getTitulo()}</h1>
-                        <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
-                        <span class="meta">Posted by <a href="#">Start Bootstrap</a> on August 24, 2014</span>
+
+                        <h5> Posted by: ${articulo.getAutor().getNombre()}, ${ articulo.getFecha()} </h5>
                     </div>
                 </div>
             </div>
@@ -98,11 +98,10 @@
                 ${c.getComentario()}
             </h3>
 
-
     </#list>
 
     </div>
-    <form action="comentar">
+    <form action="/comentar">
        <div class="form-group">
          <label for="comment">Comment:</label>
          <textarea class="form-control" rows="5" id="comment"></textarea>
@@ -110,7 +109,7 @@
 
     </form>
      <#list articulo.getEtiquetas() as e>
-                          <input  name="etiquetas" type="text" value="${e.getEtiqueta()}" data-role="tagsinput" disabled/>
+        <input  name="etiquetas" type="text" value="${e.getEtiqueta()}" data-role="tagsinput" disabled/>
      </#list>
 
     <hr>

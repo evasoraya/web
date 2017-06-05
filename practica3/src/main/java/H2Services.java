@@ -36,8 +36,9 @@ public class H2Services {
                 "  ADMINISTRADOR BOOLEAN NOT NULL,\n" +
                 "  AUTOR BOOLEAN NOT NULL);";
 
-        String sqlArticulo = "CREATE TABLE IF NOT EXISTS ARTICULO\n" +
-                "(ID INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,TITULO VARCHAR(100) NOT NULL," +
+        String sqlArticulo = "CREATE TABLE IF NOT EXISTS ARTICULO" +
+                "(ID INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL," +
+                "TITULO VARCHAR(100) NOT NULL," +
                 "CUERPO VARCHAR(500) NOT NULL," +
                 "AUTOR VARCHAR(25) NOT NULL, FOREIGN KEY (AUTOR) REFERENCES USUARIO(USERNAME)," +
                 "FECHA VARCHAR(30) NOT NULL);";
@@ -55,6 +56,8 @@ public class H2Services {
 
         String sqlAdmin = "INSERT INTO USUARIO (USERNAME, NOMBRE, PASSWORD, ADMINISTRADOR, AUTOR)" +
                 " VALUES ('admin', 'Administrador', 'admin', TRUE, TRUE);";
+        String sqlAr = "INSERT INTO ARTICULO (TITULO, CUERPO, AUTOR, FECHA)" +
+                " VALUES ('Prueba', 'prueba probando klk', 'admin', '19-01-19');";
 
         Connection con = DataBaseServices.getInstancia().getConexion();
         Statement statement = con.createStatement();
@@ -62,7 +65,8 @@ public class H2Services {
         statement.execute(sqlArticulo);
         statement.execute(sqlEtiqueta);
         statement.execute(sqlComentario);
-        statement.execute(sqlAdmin);
+        //statement.execute(sqlAdmin);
+        statement.execute(sqlAr);
         statement.close();
         con.close();
     }

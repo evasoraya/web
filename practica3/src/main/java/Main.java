@@ -43,6 +43,12 @@ public class Main {
             ArticulosServices articulosServices = new ArticulosServices();
             List<Articulo> articulos = articulosServices.listaArticulos();
             Map<String, Object> model = new HashMap<>();
+
+            for (Articulo a : articulos){
+                System.out.println("......................"
+                        +a.getTitulo()+" "+ a.getId() + " "+ a.getCuerpo()+ " "+ a.getAutor().getNombre() + " "+ a.getFecha());
+            }
+
             model.put("articulos", articulos);
             return new ModelAndView(model, "index.ftl");
         }, freeMarkerEngine);
@@ -56,12 +62,14 @@ public class Main {
 
 
         get("/post/:id", (req, res) -> {
-
+            System.out.println(req.params("id"));
 
             int id = Integer.parseInt(req.params("id"));
+
             ArticulosServices articulosServices = new ArticulosServices();
             Articulo articulo = articulosServices.getArticulo(id);
             Map<String, Object> model = new HashMap<>();
+
             model.put("articulo", articulo);
             return new ModelAndView(model, "post.ftl");
         }, freeMarkerEngine);
@@ -83,7 +91,7 @@ public class Main {
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
             System.out.println(user.getUsername());
             Articulo a = new Articulo(
-                    Long.parseLong(req.queryParams("id")),
+
                     req.queryParams("titulo"),
                     req.queryParams("cuerpo"),
                     user,
@@ -103,16 +111,12 @@ public class Main {
 
         post("/login", (req, res) -> {
             if(autentificacion(req.queryParams("username"),req.queryParams("password"))){
-<<<<<<< HEAD
+
                 String usuario = req.queryParams("username");
 
-                    req.session().attribute(SESSION_NAME, req.queryParams("usuario"));
-                    res.redirect("/index");
-
-=======
                 req.session().attribute(SESSION_NAME, req.queryParams("username"));
                 res.redirect("/index");
->>>>>>> 14bc08b07b20d881aeee17506fced5c11adaee34
+
              }
             return null;
         });

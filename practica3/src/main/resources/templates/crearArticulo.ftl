@@ -91,7 +91,7 @@
                            <div class="row control-group " >
                                <div class="form-group col-xs-12 floating-label-form-group controls">
                                    <label>Titulo</label>
-                                   <input type="number" name="id">
+
                                    <input type="text" class="form-control" name="titulo" placeholder="Titulo" id="titulo" required data-validation-required-message="introduzca el nombre del articulo">
                                    <p class="help-block text-danger"></p>
                                </div>
