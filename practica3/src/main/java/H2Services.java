@@ -53,12 +53,16 @@ public class H2Services {
                 "AUTOR INTEGER FOREIGN KEY REFERENCES USUARIO(USERNAME) NOT NULL," +
                 "FECHA VARCHAR(30) NOT NULL);";
 
+        String sqlAdmin = "INSERT INTO USUARIO(USERNAME, NOMBRE, PASSWORD, ADMINISTRADOR, AUTOR)" +
+                " VALUES (\"admin\", \"Administrador\", \"admin\", TRUE, TRUE);";
+
         Connection con = DataBaseServices.getInstancia().getConexion();
         Statement statement = con.createStatement();
         statement.execute(sqlUsuario);
         statement.execute(sqlEtiqueta);
         statement.execute(sqlComentario);
         statement.execute(sqlArticulo);
+        statement.execute(sqlAdmin);
         statement.close();
         con.close();
     }

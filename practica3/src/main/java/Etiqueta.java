@@ -2,14 +2,13 @@
  * Created by eva_c on 6/3/2017.
  */
 public class Etiqueta {
-    private long id;
+    private long id = -1;
     private String etiqueta;
     private Articulo articulo;
 
     public Etiqueta(){}
 
-    public Etiqueta(long id, String etiqueta, Articulo articulo) {
-        this.id = id;
+    public Etiqueta(String etiqueta, Articulo articulo) {
         this.etiqueta = etiqueta;
         this.articulo = articulo;
     }
