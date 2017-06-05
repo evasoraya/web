@@ -87,9 +87,7 @@ public class Main {
         post("/crearArticulo", (req, res) -> {
             Date current = new Date();
             UsersServices usersServices = new UsersServices();
-            System.out.println(req.session().attributes().size());
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
-            System.out.println(user.getUsername());
             Articulo a = new Articulo(
 
                     req.queryParams("titulo"),
@@ -121,17 +119,12 @@ public class Main {
             return null;
         });
     }
-    private static  void crearNuevoComentario(Comentario c, Articulo a) {
-        //TODO arreglar eso.
-
-
-
-        List<Articulo> articulos = new ArrayList<>();
-        for (Articulo ar : articulos) {
-            if (ar.getId() == a.getId()) {
-                ar.comentarios.add(c);
-            }
-        }
+    private static void crearNuevoComentario(Comentario c, Articulo a) {
+        c.setArticulo(a);
+        ComentariosServices comentariosServices = new ComentariosServices();
+        comentariosServices.crearComentario(c);
+        List<Comentario> comentarios = comentariosServices.getArticulosComments(a.getId());
+        a.setComentarios(new ArrayList<>(comentarios));
     }
     private static Articulo crearNuevaEtiqueta(String[] e, Articulo a){
         EtiquetasServices etiquetasServices = new EtiquetasServices();

@@ -13,24 +13,11 @@ public class ComentariosServices {
         List<Comentario> lista = new ArrayList<>();
         Connection con = null; //objeto conexion.
         try {
-
             String query = "select * from comentario";
             con = DataBaseServices.getInstancia().getConexion(); //referencia a la conexion.
             PreparedStatement prepareStatement = con.prepareStatement(query);
             ResultSet rs = prepareStatement.executeQuery();
-            while(rs.next()){
-                Comentario comentario = new Comentario();
-                comentario.setId(rs.getInt("ID"));
-                comentario.setComentario(rs.getString("COMENTARIO"));
-                UsersServices usersServices = new UsersServices();
-                Usuario autor = usersServices.getUsuario(rs.getString("AUTOR"));
-                comentario.setAutor(autor);
-                ArticulosServices articulosServices = new ArticulosServices();
-                Articulo articulo = articulosServices.getArticulo(rs.getInt("ARTICULO"));
-                comentario.setArticulo(articulo);
-                lista.add(comentario);
-            }
-
+            lista = getCommentsList(rs);
         } catch (SQLException ex) {
             Logger.getLogger(ComentariosServices.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
@@ -159,6 +146,51 @@ public class ComentariosServices {
             }
         }
         return ok;
+    }
+
+
+    public List<Comentario> getArticulosComments(long artID){
+        List<Comentario> comentarios = null;
+        Connection con = null;
+        try {
+            String query = "select * from comentario where articulo = ?";
+            con = DataBaseServices.getInstancia().getConexion();
+            PreparedStatement prepareStatement = con.prepareStatement(query);
+            //Antes de ejecutar seteo los parametros.
+            prepareStatement.setLong(1, artID);
+            //Ejecuto...
+            ResultSet rs = prepareStatement.executeQuery();
+            comentarios = getCommentsList(rs);
+        } catch (SQLException ex) {
+            Logger.getLogger(ComentariosServices.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try { con.close(); }
+            catch (SQLException ex) {
+                Logger.getLogger(ComentariosServices.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return comentarios;
+    }
+
+    private List<Comentario> getCommentsList(ResultSet rs) {
+        List<Comentario> comentarios = new ArrayList<>();
+        try {
+            while(rs.next()){
+                Comentario com = new Comentario();
+                com.setId(rs.getInt("ID"));
+                com.setComentario(rs.getString("COMENTARIO"));
+                UsersServices usersServices = new UsersServices();
+                Usuario autor = usersServices.getUsuario(rs.getString("AUTOR"));
+                com.setAutor(autor);
+                ArticulosServices articulosServices = new ArticulosServices();
+                Articulo articulo = articulosServices.getArticulo(rs.getInt("ARTICULO"));
+                com.setArticulo(articulo);
+                comentarios.add(com);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return comentarios;
     }
 
 }

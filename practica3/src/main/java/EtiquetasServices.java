@@ -18,6 +18,22 @@ public class EtiquetasServices {
             con = DataBaseServices.getInstancia().getConexion(); //referencia a la conexion.
             PreparedStatement prepareStatement = con.prepareStatement(query);
             ResultSet rs = prepareStatement.executeQuery();
+            lista = getTagList(rs);
+        } catch (SQLException ex) {
+            Logger.getLogger(EtiquetasServices.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(EtiquetasServices.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return lista;
+    }
+
+    private List<Etiqueta> getTagList(ResultSet rs) {
+        List<Etiqueta> lista = new ArrayList<>();
+        try {
             while(rs.next()){
                 Etiqueta etiqueta = new Etiqueta();
                 etiqueta.setId(rs.getInt("ID"));
@@ -27,15 +43,8 @@ public class EtiquetasServices {
                 etiqueta.setArticulo(articulo);
                 lista.add(etiqueta);
             }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(EtiquetasServices.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
-            try {
-                con.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(EtiquetasServices.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return lista;
     }
@@ -148,4 +157,27 @@ public class EtiquetasServices {
         return ok;
     }
 
+
+    public List<Etiqueta> getArticlesTags(long id){
+        List<Etiqueta> lista = new ArrayList<>();
+        Connection con = null; //objeto conexion.
+        try {
+            String query = "select * from etiqueta where ARTICULO=?";
+            con = DataBaseServices.getInstancia().getConexion(); //referencia a la conexion.
+            PreparedStatement prepareStatement = con.prepareStatement(query);
+            //where...
+            prepareStatement.setLong(1, id);
+            ResultSet rs = prepareStatement.executeQuery();
+            lista = getTagList(rs);
+        } catch (SQLException ex) {
+            Logger.getLogger(EtiquetasServices.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(EtiquetasServices.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return lista;
+    }
 }
