@@ -13,7 +13,6 @@ public class ArticulosServices {
         List<Articulo> lista = new ArrayList<>();
         Connection con = null; //objeto conexion.
         try {
-
             String query = "select * from articulo";
             con = DataBaseServices.getInstancia().getConexion(); //referencia a la conexion.
             PreparedStatement prepareStatement = con.prepareStatement(query);
@@ -23,12 +22,12 @@ public class ArticulosServices {
                 articulo.setId(rs.getInt("ID"));
                 articulo.setTitulo(rs.getString("TITULO"));
                 articulo.setFecha(rs.getString("FECHA"));
+                articulo.setCuerpo(rs.getString("CUERPO"));
                 UsersServices usersServices = new UsersServices();
                 Usuario autor = usersServices.getUsuario(rs.getString("AUTOR"));
                 articulo.setAutor(autor);
                 lista.add(articulo);
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(ArticulosServices.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
@@ -46,7 +45,7 @@ public class ArticulosServices {
      * @param id
      * @return
      */
-    public Articulo getArticulo(int id) {
+    public Articulo getArticulo(long id) {
         Articulo articulo = null;
         Connection con = null;
         try {
@@ -54,7 +53,7 @@ public class ArticulosServices {
             con = DataBaseServices.getInstancia().getConexion();
             PreparedStatement prepareStatement = con.prepareStatement(query);
             //Antes de ejecutar seteo los parametros.
-            prepareStatement.setInt(1, id);
+            prepareStatement.setLong(1, id);
             //Ejecuto...
             ResultSet rs = prepareStatement.executeQuery();
             while(rs.next()){
@@ -139,7 +138,6 @@ public class ArticulosServices {
 
     public boolean borrarArticulo(long id){
         boolean ok =false;
-
         Connection con = null;
         try {
             String query = "DELETE FROM articulo WHERE id = ?";
