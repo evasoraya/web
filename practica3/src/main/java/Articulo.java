@@ -11,18 +11,16 @@ public class Articulo {
     private String cuerpo;
     private Usuario autor;
     private String fecha;
-    public ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
-    public ArrayList<Etiqueta> etiquetas= new ArrayList<Etiqueta>();
+    public ArrayList<Comentario> comentarios = new ArrayList<>();
+    public ArrayList<Etiqueta> etiquetas= new ArrayList<>();
 
     public Articulo(){}
 
-    public Articulo( String titulo, String cuerpo, Usuario autor, String fecha /*ArrayList<Etiqueta> etiquetas*/) {
-
+    public Articulo( String titulo, String cuerpo, Usuario autor, String fecha) {
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.autor = autor;
         this.fecha = fecha;
-       // this.etiquetas = etiquetas;
     }
 
     public long getId() {
@@ -79,6 +77,15 @@ public class Articulo {
 
     public void setEtiquetas(ArrayList<Etiqueta> etiquetas) {
         this.etiquetas = etiquetas;
+    }
+
+    public void setEtiquetasList(String[] etiquetas){
+        EtiquetasServices etiquetasServices = new EtiquetasServices();
+        for (String s : etiquetas){
+            etiquetasServices.crearEtiqueta(new Etiqueta(s, this));
+        }
+        List<Etiqueta> nuevas_etiquetas = etiquetasServices.listaEtiquetas();
+        this.setEtiquetas(new ArrayList<>(nuevas_etiquetas));
     }
 
 }
