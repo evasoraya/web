@@ -93,19 +93,23 @@
         </div>
     </article>
      <#list articulo.getComentarios() as c>
-
-            <h3 class="post-subtitle">
-                ${c.getComentario()}
-            </h3>
+            <div >
+            <h5 class="post-subtitle">
+                ${c.getComentario()} <br>
+            </h5>
+            </div>
 
     </#list>
 
     </div>
-    <form action="/comentar">
+    <form action="/post1/${articulo.getId()}" method = "POST">
        <div class="form-group">
          <label for="comment">Comment:</label>
-         <textarea class="form-control" rows="5" id="comment"></textarea>
+         <input class="form-control" rows="5" name="comentario"/>
+         <input name="id"  class="form-control" value="${articulo.getId()}" hidden>
+
        </div>
+        <button type="submit" class="btn btn-default">Send</button>
 
     </form>
      <#list articulo.getEtiquetas() as e>

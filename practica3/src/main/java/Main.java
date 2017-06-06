@@ -2,10 +2,12 @@ import freemarker.template.Configuration;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 
+import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 import static spark.Spark.*;
 
@@ -56,6 +58,9 @@ public class Main {
             int id = Integer.parseInt(req.params("id"));
             ArticulosServices articulosServices = new ArticulosServices();
             Articulo articulo = articulosServices.getArticulo(id);
+            ArrayList <Comentario> Tem = new ArrayList<Comentario>();
+            Tem.addAll(new ComentariosServices().getArticulosComments(articulo.getId()));
+            articulo.setComentarios(Tem);
             Map<String, Object> model = new HashMap<>();
 
             model.put("articulo", articulo);
@@ -89,8 +94,17 @@ public class Main {
             return null;
         });
 
-        post("/cometar", (req, res) -> {
-            req.queryParams("comentario");
+        post("/post1/:id", (req, res) -> {
+            //req.queryParams("comentario");
+            System.out.println("..................................................."+ req.queryParams("id"));
+            UsersServices usersServices = new UsersServices();
+            Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
+            Articulo a =  new ArticulosServices().getArticulo( Integer.parseInt(req.queryParams("id")));
+            Comentario c = new Comentario(req.queryParams("comentario"),user,a);
+            new ComentariosServices(). crearComentario(c);
+            System.out.println(new ComentariosServices().getArticulosComments(Long.parseLong(req.queryParams("id"))).get(0).getComentario());
+
+            res.redirect("/post/"+ req.queryParams("id"));
             return null;
         });
 
