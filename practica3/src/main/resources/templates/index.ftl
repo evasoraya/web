@@ -91,11 +91,24 @@
                 <#list articulos as a>
 
                     <a href="/post/${a.getId()}">
-                        <h2 class="post-title">
-                           ${a.getTitulo()}
-                        </h2>
+                        <h2 class="post-title"> ${a.getTitulo()} </h2> </a>
 
-                    </a>
+                                                <form action="/borrar" method="POST">
+
+                                                    <input name="id" value="${a.getId()}" hidden />
+                                                    <button style = "background-color: white;border-style:none; color: black" type="submit" class="btn btn-primary">
+                                                      <i id="hovering" class="glyphicon glyphicon-trash"></i>
+                                                    </button>
+                                                    </form>
+
+
+
+
+
+
+
+
+
                     <h5> Posted by: ${a.getAutor().getNombre()}, ${ a.getFecha()} </h5>
 
                     <h4 class="post-subtitle">

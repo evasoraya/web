@@ -94,6 +94,8 @@ public class Main {
             return null;
         });
 
+
+
         post("/post1/:id", (req, res) -> {
             //req.queryParams("comentario");
             System.out.println("..................................................."+ req.queryParams("id"));
@@ -105,6 +107,13 @@ public class Main {
             System.out.println(new ComentariosServices().getArticulosComments(Long.parseLong(req.queryParams("id"))).get(0).getComentario());
 
             res.redirect("/post/"+ req.queryParams("id"));
+            return null;
+        });
+
+        post("/borrar", (req, res) -> {
+            System.out.println("Para brrar"+req.queryParams("id"));
+            new ArticulosServices().borrarArticulo(Long.parseLong(req.queryParams("id")));
+            res.redirect("/index");
             return null;
         });
 
