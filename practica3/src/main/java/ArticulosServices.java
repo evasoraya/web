@@ -13,7 +13,7 @@ public class ArticulosServices {
         List<Articulo> lista = new ArrayList<>();
         Connection con = null; //objeto conexion.
         try {
-            String query = "select * from articulo";
+            String query = "select * from articulo order by id desc";
             con = DataBaseServices.getInstancia().getConexion(); //referencia a la conexion.
             PreparedStatement prepareStatement = con.prepareStatement(query);
             ResultSet rs = prepareStatement.executeQuery();
@@ -26,8 +26,8 @@ public class ArticulosServices {
                 UsersServices usersServices = new UsersServices();
                 Usuario autor = usersServices.getUsuario(rs.getString("AUTOR"));
                 articulo.setAutor(autor);
-                articulo.setComentarios(new ArrayList<>(new ComentariosServices().getArticulosComments(articulo.getId())));
-                articulo.setEtiquetas(new ArrayList<>(new EtiquetasServices().getArticlesTags(articulo.getId())));
+                articulo.retrieveComments();
+                articulo.retrieveTags();
                 lista.add(articulo);
             }
         } catch (SQLException ex) {
@@ -84,7 +84,7 @@ public class ArticulosServices {
         boolean ok =false;
         Connection con = null;
         try {
-            String query = "INSERT INTO ARTICULO(titulo, cuerpo, autor, fecha) VALUES(?,?,?,?);";
+            String query = "insert into articulo (titulo, cuerpo, autor, fecha) values (?,?,?,?);";
             con = DataBaseServices.getInstancia().getConexion();
             PreparedStatement prepareStatement = con.prepareStatement(query);
             //Antes de ejecutar seteo los parametros.

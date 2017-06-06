@@ -29,8 +29,7 @@ public class H2Services {
      */
     public static void crearTablas() throws  SQLException{
         String sqlUsuario = "CREATE TABLE IF NOT EXISTS USUARIO\n" +
-                "(\n" +
-                "  USERNAME VARCHAR(25) PRIMARY KEY NOT NULL,\n" +
+                "(USERNAME VARCHAR(25) PRIMARY KEY NOT NULL,\n" +
                 "  NOMBRE VARCHAR(100) NOT NULL,\n" +
                 "  PASSWORD VARCHAR(100) NOT NULL,\n" +
                 "  ADMINISTRADOR BOOLEAN NOT NULL,\n" +
@@ -39,12 +38,12 @@ public class H2Services {
         String sqlArticulo = "CREATE TABLE IF NOT EXISTS ARTICULO" +
                 "(ID INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL," +
                 "TITULO VARCHAR(100) NOT NULL," +
-                "CUERPO VARCHAR(500) NOT NULL," +
+                "CUERPO VARCHAR(2000) NOT NULL," +
                 "AUTOR VARCHAR(25) NOT NULL, FOREIGN KEY (AUTOR) REFERENCES USUARIO(USERNAME)," +
                 "FECHA VARCHAR(30) NOT NULL);";
 
         String sqlComentario = "CREATE TABLE IF NOT EXISTS COMENTARIO\n" +
-                "(ID INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,COMENTARIO VARCHAR(500) NOT NULL," +
+                "(ID INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,COMENTARIO VARCHAR(1000) NOT NULL," +
                 "AUTOR VARCHAR(25) NOT NULL, FOREIGN KEY (AUTOR) REFERENCES USUARIO(USERNAME)," +
                 "ARTICULO INTEGER NOT NULL, FOREIGN KEY (ARTICULO) REFERENCES ARTICULO(ID));";
 
@@ -56,8 +55,6 @@ public class H2Services {
 
         String sqlAdmin = "INSERT INTO USUARIO (USERNAME, NOMBRE, PASSWORD, ADMINISTRADOR, AUTOR)" +
                 " VALUES ('admin', 'Administrador', 'admin', TRUE, TRUE);";
-        String sqlAr = "INSERT INTO ARTICULO (TITULO, CUERPO, AUTOR, FECHA)" +
-                " VALUES ('Prueba', 'prueba probando klk', 'admin', '19-01-19');";
 
         Connection con = DataBaseServices.getInstancia().getConexion();
         Statement statement = con.createStatement();
@@ -65,8 +62,7 @@ public class H2Services {
         statement.execute(sqlArticulo);
         statement.execute(sqlEtiqueta);
         statement.execute(sqlComentario);
-        //statement.execute(sqlAdmin);
-        statement.execute(sqlAr);
+        statement.execute(sqlAdmin);
         statement.close();
         con.close();
     }

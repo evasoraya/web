@@ -67,7 +67,7 @@ public class Articulo {
         return comentarios;
     }
 
-    public void setComentarios(ArrayList<Comentario> comentarios) {
+    private void setComentarios(ArrayList<Comentario> comentarios) {
         this.comentarios = comentarios;
     }
 
@@ -75,7 +75,7 @@ public class Articulo {
         return etiquetas;
     }
 
-    public void setEtiquetas(ArrayList<Etiqueta> etiquetas) {
+    private void setEtiquetas(ArrayList<Etiqueta> etiquetas) {
         this.etiquetas = etiquetas;
     }
 

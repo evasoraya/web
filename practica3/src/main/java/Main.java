@@ -94,14 +94,11 @@ public class Main {
         });
 
         post("/post1/:id", (req, res) -> {
-            //req.queryParams("comentario");
-            System.out.println("..................................................."+ req.queryParams("id"));
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
             Articulo a =  new ArticulosServices().getArticulo( Integer.parseInt(req.queryParams("id")));
             Comentario c = new Comentario(req.queryParams("comentario"),user,a);
             new ComentariosServices(). crearComentario(c);
-            System.out.println(new ComentariosServices().getArticulosComments(Long.parseLong(req.queryParams("id"))).get(0).getComentario());
 
             res.redirect("/post/"+ req.queryParams("id"));
             return null;
