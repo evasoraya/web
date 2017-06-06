@@ -58,9 +58,8 @@ public class Main {
             int id = Integer.parseInt(req.params("id"));
             ArticulosServices articulosServices = new ArticulosServices();
             Articulo articulo = articulosServices.getArticulo(id);
-            ArrayList <Comentario> Tem = new ArrayList<Comentario>();
-            Tem.addAll(new ComentariosServices().getArticulosComments(articulo.getId()));
-            articulo.setComentarios(Tem);
+            articulo.retrieveComments();
+            articulo.retrieveTags();
             Map<String, Object> model = new HashMap<>();
 
             model.put("articulo", articulo);
