@@ -92,23 +92,31 @@
             </div>
         </div>
     </article>
-     <#list articulo.getComentarios() as c>
-            <div >
-            <h5 class="post-subtitle">
-                ${c.getComentario()} <br>
-            </h5>
-            </div>
+    <table class="table" col-sm-8>
+        <thead class="thead-inverse">
+            <tr><th>Comentarios</th></tr>
+            <tbody>
+                  <#list articulo.getComentarios() as c>
 
-    </#list>
+                            <div>
+
+                             <tr> <td>  ${c.getComentario()} </td> </tr>
+
+                            </div>
+
+                    </#list>
+            </tbody>
+        </thead>
+   </table>
 
     </div>
     <form action="/post1/${articulo.getId()}" method = "POST">
        <div class="form-group">
          <label for="comment">Comment:</label>
          <input class="form-control" rows="5" name="comentario"/>
-         <input name="id"  class="form-control" value="${articulo.getId()}" hidden>
 
        </div>
+       <input name="id"   value="${articulo.getId()}" hidden />
         <button type="submit" class="btn btn-default">Send</button>
 
     </form>
