@@ -93,6 +93,8 @@ public class Main {
             return null;
         });
 
+
+
         post("/post1/:id", (req, res) -> {
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
@@ -101,6 +103,13 @@ public class Main {
             new ComentariosServices(). crearComentario(c);
 
             res.redirect("/post/"+ req.queryParams("id"));
+            return null;
+        });
+
+        post("/borrar", (req, res) -> {
+            System.out.println("Para brrar"+req.queryParams("id"));
+            new ArticulosServices().borrarArticulo(Long.parseLong(req.queryParams("id")));
+            res.redirect("/index");
             return null;
         });
 
