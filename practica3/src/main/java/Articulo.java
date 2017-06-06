@@ -88,4 +88,12 @@ public class Articulo {
         this.setEtiquetas(new ArrayList<>(nuevas_etiquetas));
     }
 
+    public void retrieveComments(){
+        List<Comentario> comentarios = new ComentariosServices().getArticulosComments(this.getId());
+        this.setComentarios(new ArrayList<>(comentarios));
+    }
+
+    public void retrieveTags(){
+        this.setEtiquetas(new ArrayList<>(new EtiquetasServices().getArticlesTags(this.getId())));
+    }
 }

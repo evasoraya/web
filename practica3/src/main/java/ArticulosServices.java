@@ -26,6 +26,8 @@ public class ArticulosServices {
                 UsersServices usersServices = new UsersServices();
                 Usuario autor = usersServices.getUsuario(rs.getString("AUTOR"));
                 articulo.setAutor(autor);
+                articulo.setComentarios(new ArrayList<>(new ComentariosServices().getArticulosComments(articulo.getId())));
+                articulo.setEtiquetas(new ArrayList<>(new EtiquetasServices().getArticlesTags(articulo.getId())));
                 lista.add(articulo);
             }
         } catch (SQLException ex) {
@@ -65,6 +67,7 @@ public class ArticulosServices {
                 UsersServices usersServices = new UsersServices();
                 Usuario autor = usersServices.getUsuario(rs.getString("AUTOR"));
                 articulo.setAutor(autor);
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(ArticulosServices.class.getName()).log(Level.SEVERE, null, ex);
