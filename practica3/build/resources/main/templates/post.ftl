@@ -59,7 +59,6 @@
                    <li>
                        <a href="/regitrar">Registrar</a>
                    </li>
-</ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -74,7 +73,6 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="post-heading">
                         <h1>${articulo.getTitulo()}</h1>
-
                         <h5> Posted by: ${articulo.getAutor().getNombre()}, ${ articulo.getFecha()} </h5>
                     </div>
                 </div>
@@ -92,29 +90,28 @@
             </div>
         </div>
     </article>
-    <table class="table" col-sm-8>
-        <thead class="thead-inverse">
+
+    <div class="col-md-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <table class="table">
+            <thead class="thead-inverse">
             <tr><th>Comentarios</th></tr>
+            </thead>
             <tbody>
-                  <#list articulo.getComentarios() as c>
-
-                            <div>
-
-                             <tr> <td>  ${c.getComentario()} </td> </tr>
-
-                            </div>
-
-                    </#list>
+            <#list articulo.getComentarios() as c>
+            <div>
+                <tr><td>${c.getComentario()}</td></tr>
+            </div>
+            </#list>
             </tbody>
-        </thead>
-   </table>
+        </table>
+    </div>
 
     </div>
-    <form action="/post1/${articulo.getId()}" method = "POST">
+    <form class="col-md-4 col-md-offset-4" action="/post1/${articulo.getId()}" method = "POST">
        <div class="form-group">
          <label for="comment">Comment:</label>
-         <input class="form-control" rows="5" name="comentario"/>
-
+           <textarea name="comentario" class="form-control" rows="4" placeholder="Que piensas?"></textarea>
+       </div>
        </div>
        <input name="id"   value="${articulo.getId()}" hidden />
         <button type="submit" class="btn btn-default">Send</button>

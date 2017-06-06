@@ -93,8 +93,6 @@ public class Main {
             return null;
         });
 
-
-
         post("/post1/:id", (req, res) -> {
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
