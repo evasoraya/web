@@ -42,12 +42,9 @@
                     <span class="sr-only">Toggle navigation</span>
                     Menu <i class="fa fa-bars"></i>
                 </button>
-                ${usuario}
+
                 <#if (usuario) ??>
-                    <a class="navbar-brand" href="/logout">  ${usuario} Logout</a>
-
-
-
+                    <a class="navbar-brand" href="/logout">  ${name} Logout</a>
                  </#if>
 
 

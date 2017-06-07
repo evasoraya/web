@@ -42,11 +42,8 @@
                     <span class="sr-only">Toggle navigation</span>
                     Menu <i class="fa fa-bars"></i>
                 </button>
-                <#if (usuario) ??>
-                                    <a class="navbar-brand" href="/logout">Logout</a>
-
-
-
+                 <#if (usuario) ??>
+                                    <a class="navbar-brand" href="/logout">  ${name} Logout</a>
                                  </#if>
             </div>
 
