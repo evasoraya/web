@@ -118,6 +118,7 @@ public class Main {
             checkCookies(req);
             Map<String, Object> model = new HashMap<>();
             Articulo a = new ArticulosServices().getArticulo(Long.parseLong(req.queryParams("id")));
+
             a.retrieveTags();
 
             model.put("articulo",a);
