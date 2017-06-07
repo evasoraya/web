@@ -129,7 +129,6 @@ public class Main {
 
             a.retrieveTags();
 
-            System.out.println(a.getCuerpo());
             model.put("articulo",a);
             model.put("usuario",req.session().attribute(SESSION_NAME));
             return new ModelAndView(model, "editarArticulo.ftl");
@@ -138,7 +137,6 @@ public class Main {
         post("/editar", (req, res) -> {
             Articulo a = new ArticulosServices().getArticulo(Long.parseLong(req.queryParams("id")));
             a.retrieveTags();
-            System.out.println("POST  "+a.getTitulo() + " " + a.getCuerpo().substring(0,10) + " "+ a.getEtiquetas());
             a.setTitulo(req.queryParams(("titulo")));
             a.setCuerpo(req.queryParams("cuerpo"));
             new ArticulosServices().actualizarArticulo(a);
@@ -147,7 +145,6 @@ public class Main {
         });
 
         post("/borrar", (req, res) -> {
-            System.out.println("Para brrar"+req.queryParams("id"));
             List<Comentario> comentarios = new ComentariosServices().getArticulosComments(Long.parseLong(req.queryParams("id")));
             Articulo a = new ArticulosServices().getArticulo(Long.parseLong(req.queryParams("id")));
             a.retrieveTags();
