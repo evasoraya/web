@@ -51,8 +51,12 @@ public class H2Services {
         String sqlEtiqueta =
                 "CREATE TABLE IF NOT EXISTS ETIQUETA" +
                         "(ID INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL," +
-                        "NOMBRE VARCHAR(100) NOT NULL, " +
-                        "ARTICULO INTEGER NOT NULL, FOREIGN KEY (ARTICULO) REFERENCES ARTICULO(ID));";
+                        "TEXTO VARCHAR(100) NOT NULL);";
+
+        String sql_Etiqueta_Articulo = "CREATE TABLE IF NOT EXISTS ETIQUETA_ARTICULO(" +
+                "ID INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL," +
+                "ID_ARTICULO INTEGER NOT NULL, FOREIGN KEY (ID_ARTICULO) REFERENCES ARTICULO(ID)," +
+                "ID_ETIQUETA INTEGER NOT NULL, FOREIGN KEY (ID_ETIQUETA) REFERENCES ETIQUETA(ID));";
 
         String sqlAdmin = "INSERT INTO USUARIO (USERNAME, NOMBRE, PASSWORD, ADMINISTRADOR, AUTOR)" +
                 " VALUES ('admin', 'Administrador', 'admin', TRUE, TRUE);";
@@ -62,6 +66,7 @@ public class H2Services {
         statement.execute(sqlUsuario);
         statement.execute(sqlArticulo);
         statement.execute(sqlEtiqueta);
+        statement.execute(sql_Etiqueta_Articulo);
         statement.execute(sqlComentario);
         statement.execute(sqlAdmin);
         statement.close();

@@ -79,14 +79,14 @@ public class Articulo {
         this.etiquetas = etiquetas;
     }
 
-    public void setEtiquetasList(String[] etiquetas){
+    /*public void setEtiquetasList(String[] etiquetas){
         EtiquetasServices etiquetasServices = new EtiquetasServices();
         for (String s : etiquetas){
             etiquetasServices.crearEtiqueta(new Etiqueta(s, this));
         }
         List<Etiqueta> nuevas_etiquetas = etiquetasServices.listaEtiquetas();
         this.setEtiquetas(new ArrayList<>(nuevas_etiquetas));
-    }
+    }*/
 
     public void retrieveComments(){
         List<Comentario> comentarios = new ComentariosServices().getArticulosComments(this.getId());
@@ -94,6 +94,7 @@ public class Articulo {
     }
 
     public void retrieveTags(){
-        this.setEtiquetas(new ArrayList<>(new EtiquetasServices().getArticlesTags(this.getId())));
+        //this.setEtiquetas(new ArrayList<>(new EtiquetasServices().getArticlesTags(this.getId())));
+        this.setEtiquetas(EtiquetaArticulo.getArticlesTags(this.getId()));
     }
 }

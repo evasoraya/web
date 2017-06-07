@@ -37,10 +37,8 @@ public class EtiquetasServices {
             while(rs.next()){
                 Etiqueta etiqueta = new Etiqueta();
                 etiqueta.setId(rs.getInt("ID"));
-                etiqueta.setEtiqueta(rs.getString("NOMBRE"));
+                etiqueta.setEtiqueta(rs.getString("TEXTO"));
                 ArticulosServices articulosServices = new ArticulosServices();
-                Articulo articulo = articulosServices.getArticulo(rs.getInt("ARTICULO"));
-                etiqueta.setArticulo(articulo);
                 lista.add(etiqueta);
             }
         } catch (SQLException e) {
@@ -68,10 +66,7 @@ public class EtiquetasServices {
             while(rs.next()){
                 etiqueta = new Etiqueta();
                 etiqueta.setId(rs.getInt("ID"));
-                etiqueta.setEtiqueta(rs.getString("NOMBRE"));
-                ArticulosServices articulosServices = new ArticulosServices();
-                Articulo articulo = articulosServices.getArticulo(rs.getInt("ARTICULO"));
-                etiqueta.setArticulo(articulo);
+                etiqueta.setEtiqueta(rs.getString("TEXTO"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(EtiquetasServices.class.getName()).log(Level.SEVERE, null, ex);
@@ -88,12 +83,11 @@ public class EtiquetasServices {
         boolean ok =false;
         Connection con = null;
         try {
-            String query = "INSERT INTO COMENTARIO(nombre, articulo) VALUES (?,?);";
+            String query = "INSERT INTO etiqueta (texto) VALUES (?);";
             con = DataBaseServices.getInstancia().getConexion();
             PreparedStatement prepareStatement = con.prepareStatement(query);
             //Antes de ejecutar seteo los parametros.
             prepareStatement.setString(1, etiqueta.getEtiqueta());
-            prepareStatement.setLong(2, etiqueta.getArticulo().getId());
             int fila = prepareStatement.executeUpdate();
             ok = fila > 0 ;
         } catch (SQLException ex) {
@@ -112,14 +106,13 @@ public class EtiquetasServices {
         boolean ok =false;
         Connection con = null;
         try {
-            String query = "UPDATE etiqueta SET nombre=?, articulo=? WHERE id = ?";
+            String query = "UPDATE etiqueta SET texto=? WHERE id = ?";
             con = DataBaseServices.getInstancia().getConexion();
             PreparedStatement prepareStatement = con.prepareStatement(query);
             //Antes de ejecutar seteo los parametros.
             prepareStatement.setString(1, etiqueta.getEtiqueta());
-            prepareStatement.setLong(2, etiqueta.getArticulo().getId());
             //Indica el where...
-            prepareStatement.setLong(3, etiqueta.getId());
+            prepareStatement.setLong(2, etiqueta.getId());
             int fila = prepareStatement.executeUpdate();
             ok = fila > 0 ;
         } catch (SQLException ex) {
@@ -158,7 +151,7 @@ public class EtiquetasServices {
     }
 
 
-    public List<Etiqueta> getArticlesTags(long id){
+   /* public List<Etiqueta> getArticlesTags(long id){
         List<Etiqueta> lista = new ArrayList<>();
         Connection con = null; //objeto conexion.
         try {
@@ -179,5 +172,5 @@ public class EtiquetasServices {
             }
         }
         return lista;
-    }
+    }*/
 }
