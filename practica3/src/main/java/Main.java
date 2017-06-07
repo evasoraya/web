@@ -176,6 +176,13 @@ public class Main {
             res.redirect("/login");
             return null;
         });
+
+        before("crearArticulo",((request, response) -> {
+            Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
+            if (usuario == null || !usuario.isAdministrator()){
+                halt(401, "No tiene permisos para publicar.");
+            }
+        }));
     }
 
     private static void checkCookies(Request req) {
