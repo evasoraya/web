@@ -88,21 +88,20 @@
                <div class="row">
                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-                        <form action="/editar" method = "POST">
-
+                        <form action="/editar" method="POST">
                            <div class="row control-group " >
                                <div class="form-group col-xs-12 floating-label-form-group controls">
                                    <label>Titulo</label>
                                     <input type="text"  value = "${articulo.getId()}"  name="id" hidden/>
 
-                                   <input type="text" class="form-control" value =" ${articulo.titulo} " name="titulo" placeholder="Titulo" id="titulo" required data-validation-required-message="introduzca el nombre del articulo">
+                                   <input type="text" class="form-control" name="titulo" placeholder="Titulo" id="titulo" required data-validation-required-message="introduzca el nombre del articulo">${articulo.titulo}</input>
                                    <p class="help-block text-danger"></p>
                                </div>
                            </div>
                            <div class="row control-group ">
                                <div class="form-group col-xs-12 floating-label-form-group controls">
                                    <label>Cuerpo</label>
-                                    <textarea name="cuerpo" placeholder="Cuerpos" name="cuerpo" value="${articulo.cuerpo}" id="cuerpo" class="form-control" ></textarea>
+                                    <textarea name="cuerpo" placeholder="Cuerpo" name="cuerpo" id="cuerpo" >${articulo.cuerpo}</textarea>
                                    <p class="help-block text-danger"></p>
 
                                </div>
@@ -110,8 +109,8 @@
                            <div class="row control-group ">
                                <div class="form-group col-xs-12 floating-label-form-group controls">
                                    <label>Etiquetas</label>
-                                   <#list articulo.getEtiquetas() as e >
-                                       <input  name="etiquetas" type="text" value = "${e.etiqueta}"  placeholder="Etiquetas" data-role="tagsinput" />
+                                   <#list articulo.etiquetas as e >
+                                       <input  name="etiquetas" type="text" value="${e.etiqueta}" placeholder="Etiquetas" data-role="tagsinput" />
                                        <p class="help-block text-danger"></p>
                                     </#list>
 
