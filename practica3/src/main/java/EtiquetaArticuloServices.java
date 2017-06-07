@@ -130,15 +130,16 @@ public class EtiquetaArticuloServices {
         return ok;
     }
 
-    public boolean borrarEtiquetaArticulo(long id){
+    public boolean borrarEtiquetaArticulo(long idEtiqueta, long idArticulo){
         boolean ok =false;
         Connection con = null;
         try {
-            String query = "DELETE FROM etiqueta_articulo WHERE id = ?";
+            String query = "DELETE FROM etiqueta_articulo WHERE id_etiqueta=? AND id_articulo=?";
             con = DataBaseServices.getInstancia().getConexion();
             PreparedStatement prepareStatement = con.prepareStatement(query);
             //Indica el where...
-            prepareStatement.setLong(1, id);
+            prepareStatement.setLong(1, idEtiqueta);
+            prepareStatement.setLong(2, idArticulo);
             int fila = prepareStatement.executeUpdate();
             ok = fila > 0 ;
         } catch (SQLException ex) {

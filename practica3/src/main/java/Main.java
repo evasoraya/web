@@ -115,16 +115,14 @@ public class Main {
 
         post("/borrar", (req, res) -> {
             System.out.println("Para brrar"+req.queryParams("id"));
-            List<Comentario> l = new ComentariosServices().getArticulosComments(Long.parseLong(req.queryParams("id")));
-          Articulo a=  new ArticulosServices().getArticulo(Long.parseLong(req.queryParams("id")));
-          a.retrieveTags();
-            List<Etiqueta> e = a.getEtiquetas();
-            for(Comentario c : l){
+            List<Comentario> comentarios = new ComentariosServices().getArticulosComments(Long.parseLong(req.queryParams("id")));
+            Articulo a = new ArticulosServices().getArticulo(Long.parseLong(req.queryParams("id")));
+            a.retrieveTags();
+            for(Comentario c : comentarios){
                 new ComentariosServices().borrarComentario(c.getId());
             }
-            for(Etiqueta c : e){
-                
-                new EtiquetaArticuloServices().borrarEtiquetaArticulo(c.getId());
+            for(Etiqueta c : a.getEtiquetas()){
+                new EtiquetaArticuloServices().borrarEtiquetaArticulo(c.getId(), a.getId());
             }
             new ArticulosServices().borrarArticulo(Long.parseLong(req.queryParams("id")));
             res.redirect("/index");
