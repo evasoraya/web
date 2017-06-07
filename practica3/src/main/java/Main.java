@@ -116,12 +116,16 @@ public class Main {
         get("/editar", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             Articulo a = new ArticulosServices().getArticulo(Long.parseLong(req.queryParams("id")));
+            System.out.println(a.getTitulo() + " " + a.getCuerpo().substring(0,10) + " "+ a.getEtiquetas());
+            a.retrieveTags();
             model.put("articulo",a);
             return new ModelAndView(model, "editarArticulo.ftl");
         }, freeMarkerEngine);
 
         post("/editar", (req, res) -> {
             Articulo a = new ArticulosServices().getArticulo(Long.parseLong(req.queryParams("id")));
+            a.retrieveTags();
+            System.out.println("POST  "+a.getTitulo() + " " + a.getCuerpo().substring(0,10) + " "+ a.getEtiquetas());
             a.setTitulo(req.queryParams(("titulo")));
             a.setCuerpo(req.queryParams("cuerpo"));
             new ArticulosServices().actualizarArticulo(a);
