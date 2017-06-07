@@ -1,5 +1,6 @@
 import freemarker.template.Configuration;
 import spark.ModelAndView;
+import spark.Request;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.awt.*;
@@ -16,6 +17,7 @@ import static spark.Spark.*;
  */
 public class Main {
     private static final String SESSION_NAME = "username";
+    private static final String COOKIE_NAME = "user_cookie";
 
     public static void main(String[] args) throws IOException {
         staticFileLocation("/");
@@ -39,28 +41,27 @@ public class Main {
         //endregion
 
         get("/index", (req, res) -> {
+            checkCookies(req);
             ArticulosServices articulosServices = new ArticulosServices();
             List<Articulo> articulos = articulosServices.listaArticulos();
             for (Articulo articulo : articulos){
                 articulo.retrieveTags();
-                System.out.println(articulo.getEtiquetas().size());
-
             }
 
             Map<String, Object> model = new HashMap<>();
-
             model.put("articulos", articulos);
             return new ModelAndView(model, "index.ftl");
         }, freeMarkerEngine);
 
         get("/crearArticulo", (req, res) -> {
+            checkCookies(req);
             Map<String, Object> model = new HashMap<>();
             return new ModelAndView(model, "crearArticulo.ftl");
         }, freeMarkerEngine);
 
 
         get("/post/:id", (req, res) -> {
-            System.out.println(req.params("id"));
+            checkCookies(req);
             int id = Integer.parseInt(req.params("id"));
             ArticulosServices articulosServices = new ArticulosServices();
             Articulo articulo = articulosServices.getArticulo(id);
@@ -107,17 +108,19 @@ public class Main {
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
             Articulo a =  new ArticulosServices().getArticulo( Integer.parseInt(req.queryParams("id")));
             Comentario c = new Comentario(req.queryParams("comentario"),user,a);
-            new ComentariosServices(). crearComentario(c);
+            new ComentariosServices().crearComentario(c);
 
             res.redirect("/post/"+ req.queryParams("id"));
             return null;
         });
 
         get("/editar", (req, res) -> {
+            checkCookies(req);
             Map<String, Object> model = new HashMap<>();
             Articulo a = new ArticulosServices().getArticulo(Long.parseLong(req.queryParams("id")));
-            System.out.println(a.getTitulo() + " " + a.getCuerpo().substring(0,10) + " "+ a.getEtiquetas());
             a.retrieveTags();
+
+            System.out.println(a.getCuerpo());
             model.put("articulo",a);
             return new ModelAndView(model, "editarArticulo.ftl");
         }, freeMarkerEngine);
@@ -152,11 +155,23 @@ public class Main {
         });
 
         post("/login", (req, res) -> {
-            if(Usuario.autentificar(req.queryParams("username"),req.queryParams("password"))){
+            String username = req.queryParams("username");
+            if(Usuario.autentificar(username,req.queryParams("password"))){
+                res.cookie(COOKIE_NAME, username, 3600);
                 req.session().attribute(SESSION_NAME, req.queryParams("username"));
                 res.redirect("/index");
              }
             return null;
         });
+    }
+
+    private static void checkCookies(Request req) {
+        if (req.session().attribute(SESSION_NAME) == null) {
+            Map<String, String> cookies = req.cookies();
+            if (cookies.containsKey(COOKIE_NAME)){
+                System.out.println("Cookie found! -> " + cookies.get(COOKIE_NAME));
+                req.session().attribute(SESSION_NAME, cookies.get(COOKIE_NAME));
+            }
+        }
     }
 }

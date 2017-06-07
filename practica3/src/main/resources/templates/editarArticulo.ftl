@@ -95,14 +95,14 @@
                                    <label>Titulo</label>
                                     <input type="text"  value = "${articulo.getId()}"  name="id" hidden/>
 
-                                   <input type="text" class="form-control" value =" ${articulo.getTitulo()} " name="titulo" placeholder="Titulo" id="titulo" required data-validation-required-message="introduzca el nombre del articulo">
+                                   <input type="text" class="form-control" value =" ${articulo.titulo} " name="titulo" placeholder="Titulo" id="titulo" required data-validation-required-message="introduzca el nombre del articulo">
                                    <p class="help-block text-danger"></p>
                                </div>
                            </div>
                            <div class="row control-group ">
                                <div class="form-group col-xs-12 floating-label-form-group controls">
                                    <label>Cuerpo</label>
-                                    <textarea name="cuerpo" placeholder="Cuerpo" name="cuerpo" value = "${articulo.getCuerpo()}" id="cuerpo" class="form-control" ></textarea>
+                                    <textarea name="cuerpo" placeholder="Cuerpos" name="cuerpo" value="${articulo.cuerpo}" id="cuerpo" class="form-control" ></textarea>
                                    <p class="help-block text-danger"></p>
 
                                </div>
@@ -111,7 +111,7 @@
                                <div class="form-group col-xs-12 floating-label-form-group controls">
                                    <label>Etiquetas</label>
                                    <#list articulo.getEtiquetas() as e >
-                                       <input  name="etiquetas" type="text" value = "${e.getEtiqueta()}"  placeholder="Etiquetas" data-role="tagsinput" />
+                                       <input  name="etiquetas" type="text" value = "${e.etiqueta}"  placeholder="Etiquetas" data-role="tagsinput" />
                                        <p class="help-block text-danger"></p>
                                     </#list>
 
