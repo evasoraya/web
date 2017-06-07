@@ -51,14 +51,20 @@ public class Main {
 
             Map<String, Object> model = new HashMap<>();
             model.put("articulos", articulos);
-            model.put("usuario",req.session().attribute(SESSION_NAME));
+            UsersServices usersServices = new UsersServices();
+            Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
+            model.put("usuario",user.getUsername());
+            model.put("name",user.getNombre());
             return new ModelAndView(model, "index.ftl");
         }, freeMarkerEngine);
 
         get("/crearArticulo", (req, res) -> {
             checkCookies(req);
             Map<String, Object> model = new HashMap<>();
-            model.put("usuario",req.session().attribute(SESSION_NAME));
+            UsersServices usersServices = new UsersServices();
+            Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
+            model.put("usuario",user.getUsername());
+            model.put("name",user.getNombre());
             return new ModelAndView(model, "crearArticulo.ftl");
         }, freeMarkerEngine);
 
@@ -72,7 +78,10 @@ public class Main {
             articulo.retrieveComments();
             articulo.retrieveTags();
             Map<String, Object> model = new HashMap<>();
-            model.put("usuario",req.session().attribute(SESSION_NAME));
+            UsersServices usersServices = new UsersServices();
+            Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
+            model.put("usuario",user.getUsername());
+            model.put("name",user.getNombre());
             model.put("articulo", articulo);
             return new ModelAndView(model, "post.ftl");
         }, freeMarkerEngine);
@@ -87,7 +96,10 @@ public class Main {
 
         get("/registrar", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("usuario",req.session().attribute(SESSION_NAME));
+            UsersServices usersServices = new UsersServices();
+            Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
+            model.put("usuario",user.getUsername());
+            model.put("name",user.getNombre());
             return new ModelAndView(model, "registrar.ftl");
         }, freeMarkerEngine);
 
@@ -130,7 +142,10 @@ public class Main {
             a.retrieveTags();
 
             model.put("articulo",a);
-            model.put("usuario",req.session().attribute(SESSION_NAME));
+            UsersServices usersServices = new UsersServices();
+            Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
+            model.put("usuario",user.getUsername());
+            model.put("name",user.getNombre());
             return new ModelAndView(model, "editarArticulo.ftl");
         }, freeMarkerEngine);
 

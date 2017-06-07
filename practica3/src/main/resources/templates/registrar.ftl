@@ -43,11 +43,8 @@
                     Menu <i class="fa fa-bars"></i>
                 </button>
                   <#if (usuario) ??>
-                                      <a class="navbar-brand" href="/logout">Logout</a>
-
-
-
-                                   </#if>
+                     <a class="navbar-brand" href="/logout">  ${name} Logout</a>
+                  </#if>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
