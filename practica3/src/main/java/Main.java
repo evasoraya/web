@@ -49,12 +49,19 @@ public class Main {
                 articulo.retrieveTags();
             }
 
+
             Map<String, Object> model = new HashMap<>();
             model.put("articulos", articulos);
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
-            model.put("usuario",user.getUsername());
-            model.put("name",user.getNombre());
+            if(user==null){
+                model.put("sesion",0);
+            }else{
+                model.put("sesion",1);
+                model.put("usuario",user.getUsername());
+                model.put("name",user.getNombre());
+            }
+
             return new ModelAndView(model, "index.ftl");
         }, freeMarkerEngine);
 
