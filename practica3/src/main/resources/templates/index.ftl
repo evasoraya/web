@@ -46,6 +46,9 @@
                 <#if (usuario) ??>
                     <a class="navbar-brand" href="/logout">  ${name} Logout</a>
                  </#if>
+                 <#if (sesion)== 0 >
+                    <a class="navbar-brand" href="/login"> Login</a>
+                 </#if>
 
 
 

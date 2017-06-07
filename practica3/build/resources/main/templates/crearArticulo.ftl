@@ -44,7 +44,7 @@
                 </button>
                  <#if (usuario) ??>
                                     <a class="navbar-brand" href="/logout">  ${name} Logout</a>
-                                 </#if>
+                             </#if>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
