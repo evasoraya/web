@@ -95,7 +95,7 @@
                                    <label>Titulo</label>
                                     <input type="text"  value = "${articulo.getId()}"  name="id" hidden/>
 
-                                   <input type="text" class="form-control" value =" ${articulo.getTitulo()} " name="titulo" placeholder="Titulo" id="titulo" required data-validation-required-message="introduzca el nombre del articulo">
+                                   <input type="text" class="form-control" value ="${articulo.getTitulo()}" name="titulo" placeholder="Titulo" id="titulo" required data-validation-required-message="introduzca el nombre del articulo">
                                    <p class="help-block text-danger"></p>
                                </div>
                            </div>
