@@ -42,6 +42,7 @@ public class Main {
 
         get("/index", (req, res) -> {
             checkCookies(req);
+
             ArticulosServices articulosServices = new ArticulosServices();
             List<Articulo> articulos = articulosServices.listaArticulos();
             for (Articulo articulo : articulos){
@@ -50,36 +51,43 @@ public class Main {
 
             Map<String, Object> model = new HashMap<>();
             model.put("articulos", articulos);
+            model.put("usuario",req.session().attribute(SESSION_NAME));
             return new ModelAndView(model, "index.ftl");
         }, freeMarkerEngine);
 
         get("/crearArticulo", (req, res) -> {
             checkCookies(req);
             Map<String, Object> model = new HashMap<>();
+            model.put("usuario",req.session().attribute(SESSION_NAME));
             return new ModelAndView(model, "crearArticulo.ftl");
         }, freeMarkerEngine);
 
 
         get("/post/:id", (req, res) -> {
             checkCookies(req);
+
             int id = Integer.parseInt(req.params("id"));
             ArticulosServices articulosServices = new ArticulosServices();
             Articulo articulo = articulosServices.getArticulo(id);
             articulo.retrieveComments();
             articulo.retrieveTags();
             Map<String, Object> model = new HashMap<>();
-
+            model.put("usuario",req.session().attribute(SESSION_NAME));
             model.put("articulo", articulo);
             return new ModelAndView(model, "post.ftl");
         }, freeMarkerEngine);
 
         get("/login", (req, res) -> {
+
             return new ModelAndView(null, "login.ftl");
         }, freeMarkerEngine);
 
 
+
+
         get("/registrar", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            model.put("usuario",req.session().attribute(SESSION_NAME));
             return new ModelAndView(model, "registrar.ftl");
         }, freeMarkerEngine);
 
@@ -123,6 +131,7 @@ public class Main {
 
             System.out.println(a.getCuerpo());
             model.put("articulo",a);
+            model.put("usuario",req.session().attribute(SESSION_NAME));
             return new ModelAndView(model, "editarArticulo.ftl");
         }, freeMarkerEngine);
 
@@ -161,7 +170,13 @@ public class Main {
                 res.cookie(COOKIE_NAME, username, 3600);
                 req.session().attribute(SESSION_NAME, req.queryParams("username"));
                 res.redirect("/index");
+
              }
+            return null;
+        });
+        get("/logout",(req,res)->{
+            req.session().invalidate();
+            res.redirect("/login");
             return null;
         });
     }

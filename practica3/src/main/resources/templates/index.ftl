@@ -42,8 +42,14 @@
                     <span class="sr-only">Toggle navigation</span>
                     Menu <i class="fa fa-bars"></i>
                 </button>
-                <#if ${}>
-                    <a class="navbar-brand" href="/login">Log in</a>
+                <#if (usuario) ??>
+                    <a class="navbar-brand" href="/logout">Logout</a>
+
+
+
+                 </#if>
+
+
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -59,7 +65,7 @@
                         <a href="/post">Post</a>
                     </li>
                     <li>
-                        <a href="/regitrar">Registrar</a>
+                        <a href="/registrar">Registrar</a>
                     </li>
                 </ul>
             </div>
