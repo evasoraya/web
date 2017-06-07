@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Clean Blog - About</title>
+    <title>TecnoBlog</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -94,14 +94,14 @@
                                    <label>Titulo</label>
                                     <input type="text"  value = "${articulo.getId()}"  name="id" hidden/>
 
-                                   <input type="text" class="form-control" name="titulo" placeholder="Titulo" id="titulo" required data-validation-required-message="introduzca el nombre del articulo">${articulo.titulo}</input>
+                                   <input type="text" class="form-control" name="titulo" placeholder="Titulo" id="titulo" value="${articulo.titulo}" required data-validation-required-message="introduzca el nombre del articulo">
                                    <p class="help-block text-danger"></p>
                                </div>
                            </div>
                            <div class="row control-group ">
                                <div class="form-group col-xs-12 floating-label-form-group controls">
                                    <label>Cuerpo</label>
-                                    <textarea name="cuerpo" placeholder="Cuerpo" name="cuerpo" id="cuerpo" >${articulo.cuerpo}</textarea>
+                                    <textarea name="cuerpo" placeholder="Cuerpo" name="cuerpo" id="cuerpo" class="form-control">${articulo.cuerpo}</textarea>
                                    <p class="help-block text-danger"></p>
 
                                </div>

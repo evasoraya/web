@@ -42,7 +42,6 @@
                     <span class="sr-only">Toggle navigation</span>
                     Menu <i class="fa fa-bars"></i>
                 </button>
-                <#if ${}>
                     <a class="navbar-brand" href="/login">Log in</a>
             </div>
 
