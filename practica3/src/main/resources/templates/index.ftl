@@ -93,13 +93,17 @@
                     <a href="/post/${a.getId()}">
                         <h2 class="post-title"> ${a.getTitulo()} </h2> </a>
 
-                                                <form action="/borrar" method="POST">
+                        <form method="POST">
+                            <button formaction="/borrar" value="${a.getId()}" style = "background-color: white;border-style:none; color: black" type="submit" class="btn btn-primary">
+                              <i id="hovering" class="glyphicon glyphicon-trash"></i>
+                            </button>
+                            <button formaction="/editar" formmethod="GET" value="${a.getId()}"style = "background-color: white;border-style:none; color: black" type="submit" class="btn btn-primary">
+                                                                  <i id="hovering" class="glyphicon glyphicon-edit"></i>
+                                                                </button>
 
                                                     <input name="id" value="${a.getId()}" hidden />
-                                                    <button style = "background-color: white;border-style:none; color: black" type="submit" class="btn btn-primary">
-                                                      <i id="hovering" class="glyphicon glyphicon-trash"></i>
-                                                    </button>
-                                                    </form>
+                            </form>
+
 
 
 

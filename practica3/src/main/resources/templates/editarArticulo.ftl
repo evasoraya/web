@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Clean Blog</title>
+    <title>Clean Blog - About</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -42,7 +42,7 @@
                     <span class="sr-only">Toggle navigation</span>
                     Menu <i class="fa fa-bars"></i>
                 </button>
-                    <a class="navbar-brand" href="/login">Log in</a>
+                <a class="navbar-brand" href="/login">Log in</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -52,13 +52,13 @@
                         <a href="/index">Home</a>
                     </li>
                     <li>
-                        <a href="/crearArticulo">Crear Articulo</a>
+                        <a href="/crearArticulo">Crear articulo</a>
                     </li>
                     <li>
-                        <a href="/post">Post</a>
+                        <a href="/post">post</a>
                     </li>
                     <li>
-                        <a href="/regitrar">Registrar</a>
+                        <a href="/registrar">Registrar</a>
                     </li>
                 </ul>
             </div>
@@ -69,12 +69,12 @@
 
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header" style="background-image: url('img/home-bg.jpg')">
+    <header class="intro-header" style="background-image: url('img/about-bg.jpg')">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="site-heading">
-                        <h1>Tech Blog</h1>
+                    <div class="page-heading">
+                        <h1>Editar Articulo</h1>
                         <hr class="small">
                         <span class="subheading">Technology is everywhere</span>
                     </div>
@@ -84,63 +84,45 @@
     </header>
 
     <!-- Main Content -->
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-preview">
-                <#list articulos as a>
+      <div class="container">
+               <div class="row">
+                   <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-                    <a href="/post/${a.getId()}">
-                        <h2 class="post-title"> ${a.getTitulo()} </h2> </a>
+                        <form action="/editar" method = "POST">
+                           <div class="row control-group " >
+                               <div class="form-group col-xs-12 floating-label-form-group controls">
+                                   <label>Titulo</label>
 
-                        <form method="POST">
-                            <button formaction="/borrar" value="${a.getId()}" style = "background-color: white;border-style:none; color: black" type="submit" class="btn btn-primary">
-                              <i id="hovering" class="glyphicon glyphicon-trash"></i>
-                            </button>
-                            <button formaction="/editar" formmethod="GET" value="${a.getId()}"style = "background-color: white;border-style:none; color: black" type="submit" class="btn btn-primary">
-                                                                  <i id="hovering" class="glyphicon glyphicon-edit"></i>
-                                                                </button>
+                                   <input type="text" class="form-control" value = ${articulo.getTitulo()}  name="titulo" placeholder="Titulo" id="titulo" required data-validation-required-message="introduzca el nombre del articulo">
+                                   <p class="help-block text-danger"></p>
+                               </div>
+                           </div>
+                           <div class="row control-group ">
+                               <div class="form-group col-xs-12 floating-label-form-group controls">
+                                   <label>Cuerpo</label>
+                                    <textarea name="cuerpo" placeholder="Cuerpo" name="cuerpo" value = ${articulo.getCuerpo()} id="cuerpo" class="form-control" rows="4" cols="50"></textarea>
+                                   <p class="help-block text-danger"></p>
+                               </div>
+                           </div>
+                           <div class="row control-group ">
+                               <div class="form-group col-xs-12 floating-label-form-group controls">
+                                   <label>Etiquetas</label>
+                                   <input  name="etiquetas" type="text"  placeholder="Etiquetas" data-role="tagsinput" />
+                                   <p class="help-block text-danger"></p>
+                               </div>
+                           </div>
 
-                                                    <input name="id" value="${a.getId()}" hidden />
-                            </form>
-
-
-
-
-
-
-
-
-
-
-                    <h5> Posted by: ${a.getAutor().getNombre()}, ${ a.getFecha()} </h5>
-
-                    <h4 class="post-subtitle">
-                       ${a.getCuerpo()}
-                       <br>
-
-
-
-                    </h4>
-                    <#list a.getEtiquetas() as e>
-                      <input  name="etiquetas" type="text" value="${e.getEtiqueta()}" data-role="tagsinput" disabled/>
-                      </#list>
-
-                </#list>
-                </div>
-
-                <hr>
-
-                <hr>
-                <!-- Pager -->
-                <ul class="pager">
-                    <li class="next">
-                        <a href="#">Older Posts &rarr;</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+                           <br>
+                           <div id="success"></div>
+                           <div class="row">
+                               <div class="form-group col-xs-12">
+                                   <button type="submit" class="btn btn-default">Send</button>
+                               </div>
+                           </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
 
     <hr>
 

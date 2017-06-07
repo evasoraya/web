@@ -13,19 +13,20 @@ public class DataBaseServices {
     private String URL = "jdbc:h2:tcp://localhost/~/blog_database"; //Modo Server...
 
     /**
-     *Implementando el patron Singlenton
+     * Implementando el patron Singlenton
      */
-    private DataBaseServices(){
+    private DataBaseServices() {
         registrarDriver();
     }
 
     /**
      * Retornando la instancia.
+     *
      * @return
      */
-    public static DataBaseServices getInstancia(){
-        if(instancia==null){
-             instancia = new DataBaseServices();
+    public static DataBaseServices getInstancia() {
+        if (instancia == null) {
+            instancia = new DataBaseServices();
         }
         return instancia;
     }

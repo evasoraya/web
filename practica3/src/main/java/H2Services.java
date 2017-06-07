@@ -25,9 +25,10 @@ public class H2Services {
 
     /**
      * Metodo para recrear las tablas necesarias
+     *
      * @throws SQLException
      */
-    public static void crearTablas() throws  SQLException{
+    public static void crearTablas() throws SQLException {
         String sqlUsuario = "CREATE TABLE IF NOT EXISTS USUARIO\n" +
                 "(USERNAME VARCHAR(25) PRIMARY KEY NOT NULL,\n" +
                 "  NOMBRE VARCHAR(100) NOT NULL,\n" +
