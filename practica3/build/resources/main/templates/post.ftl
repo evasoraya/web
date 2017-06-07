@@ -62,7 +62,7 @@
                        <a href="/post">Post</a>
                    </li>
                    <li>
-                       <a href="/regitrar">Registrar</a>
+                       <a href="/registrar">Registrar</a>
                    </li>
             </div>
             <!-- /.navbar-collapse -->
