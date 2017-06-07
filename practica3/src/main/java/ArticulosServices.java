@@ -58,17 +58,7 @@ public class ArticulosServices {
             prepareStatement.setLong(1, id);
             //Ejecuto...
             ResultSet rs = prepareStatement.executeQuery();
-            while(rs.next()){
-                articulo = new Articulo();
-                articulo.setId(rs.getInt("ID"));
-                articulo.setTitulo(rs.getString("TITULO"));
-                articulo.setCuerpo(rs.getString("CUERPO"));
-                articulo.setFecha(rs.getString("FECHA"));
-                UsersServices usersServices = new UsersServices();
-                Usuario autor = usersServices.getUsuario(rs.getString("AUTOR"));
-                articulo.setAutor(autor);
-
-            }
+            articulo = retrieveArticulo(rs);
         } catch (SQLException ex) {
             Logger.getLogger(ArticulosServices.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
@@ -159,6 +149,49 @@ public class ArticulosServices {
             }
         }
         return ok;
+    }
+
+    public Articulo getUltimoArticulo(){
+        Articulo articulo = null;
+        Connection con = null;
+        try {
+            String query = "select * from articulo order by id desc limit 1";
+            con = DataBaseServices.getInstancia().getConexion();
+            PreparedStatement prepareStatement = con.prepareStatement(query);
+            //Antes de ejecutar seteo los parametros.
+            //Ejecuto...
+            ResultSet rs = prepareStatement.executeQuery();
+            articulo = retrieveArticulo(rs);
+        } catch (SQLException ex) {
+            Logger.getLogger(ArticulosServices.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try { con.close(); }
+            catch (SQLException ex) {
+                Logger.getLogger(ArticulosServices.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return articulo;
+    }
+
+    private Articulo retrieveArticulo(ResultSet rs) {
+        Articulo articulo = new Articulo();
+        try {
+            while(rs.next()){
+                articulo = new Articulo();
+                articulo.setId(rs.getInt("ID"));
+                articulo.setTitulo(rs.getString("TITULO"));
+                articulo.setCuerpo(rs.getString("CUERPO"));
+                articulo.setFecha(rs.getString("FECHA"));
+                UsersServices usersServices = new UsersServices();
+                Usuario autor = usersServices.getUsuario(rs.getString("AUTOR"));
+                articulo.setAutor(autor);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return articulo;
     }
 
 }

@@ -1,16 +1,17 @@
+import java.util.List;
+
 /**
  * Created by eva_c on 6/3/2017.
  */
 public class Etiqueta {
     private long id = -1;
     private String etiqueta;
-    private Articulo articulo;
+    //private Articulo articulo;
 
     public Etiqueta(){}
 
-    public Etiqueta(String etiqueta, Articulo articulo) {
+    public Etiqueta(String etiqueta /*Articulo articulo*/) {
         this.etiqueta = etiqueta;
-        this.articulo = articulo;
     }
 
     public long getId() {
@@ -29,11 +30,4 @@ public class Etiqueta {
         this.etiqueta = etiqueta;
     }
 
-    public Articulo getArticulo() {
-        return articulo;
-    }
-
-    public void setArticulo(Articulo articulo) {
-        this.articulo = articulo;
-    }
 }

@@ -41,6 +41,12 @@ public class Main {
         get("/index", (req, res) -> {
             ArticulosServices articulosServices = new ArticulosServices();
             List<Articulo> articulos = articulosServices.listaArticulos();
+            for (Articulo articulo : articulos){
+                articulo.retrieveTags();
+                System.out.println(articulo.getEtiquetas().size());
+
+            }
+
             Map<String, Object> model = new HashMap<>();
 
             model.put("articulos", articulos);
@@ -76,25 +82,6 @@ public class Main {
             return new ModelAndView(model, "registrar.ftl");
         }, freeMarkerEngine);
 
-        get("/editar", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            Articulo a = new ArticulosServices().getArticulo(Long.parseLong(req.queryParams("id")));
-            model.put("articulo",a);
-            return new ModelAndView(model, "editarArticulo.ftl");
-        }, freeMarkerEngine);
-
-        post("/editar", (req, res) -> {
-
-            Articulo a = new ArticulosServices().getArticulo(Long.parseLong(req.queryParams("id")));
-            a.setTitulo(req.params("titulo"));
-            a.setCuerpo(req.params("cuerpo"));
-
-            new ArticulosServices().actualizarArticulo(a);
-            res.redirect("/index");
-            return null;
-        });
-
-
         post("/crearArticulo", (req, res) -> {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss z");
             Date current = new Date();
@@ -105,9 +92,12 @@ public class Main {
                     req.queryParams("cuerpo"),
                     user,
                     dateFormat.format(current));
-            String[] eti = req.queryParams("etiquetas").split(" ");
-            a.setEtiquetasList(eti);
-            new ArticulosServices().crearArticulo(a);
+             ArticulosServices articulosServices = new ArticulosServices();
+             articulosServices.crearArticulo(a);
+             a = articulosServices.getUltimoArticulo();
+            String [] eti = req.queryParams("etiquetas").split(" ");
+            EtiquetaArticulo.crearRelaciones(eti,a);
+
             res.redirect("/index");
             return null;
         });
@@ -115,31 +105,26 @@ public class Main {
         post("/post1/:id", (req, res) -> {
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
-            Articulo a = new ArticulosServices().getArticulo(Integer.parseInt(req.queryParams("id")));
-            Comentario c = new Comentario(req.queryParams("comentario"), user, a);
-            new ComentariosServices().crearComentario(c);
+            Articulo a =  new ArticulosServices().getArticulo( Integer.parseInt(req.queryParams("id")));
+            Comentario c = new Comentario(req.queryParams("comentario"),user,a);
+            new ComentariosServices(). crearComentario(c);
 
-            res.redirect("/post/" + req.queryParams("id"));
+            res.redirect("/post/"+ req.queryParams("id"));
             return null;
         });
 
         post("/borrar", (req, res) -> {
-            System.out.println("Para brrar" + req.queryParams("id"));
-            List<Comentario> l = new ComentariosServices().getArticulosComments(Long.parseLong(req.queryParams("id")));
-            for (Comentario c : l) {
-                new ComentariosServices().borrarComentario(c.getId());
-
-            }
+            System.out.println("Para brrar"+req.queryParams("id"));
             new ArticulosServices().borrarArticulo(Long.parseLong(req.queryParams("id")));
             res.redirect("/index");
             return null;
         });
 
         post("/login", (req, res) -> {
-            if (Usuario.autentificar(req.queryParams("username"), req.queryParams("password"))) {
+            if(Usuario.autentificar(req.queryParams("username"),req.queryParams("password"))){
                 req.session().attribute(SESSION_NAME, req.queryParams("username"));
                 res.redirect("/index");
-            }
+             }
             return null;
         });
     }
