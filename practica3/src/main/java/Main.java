@@ -113,6 +113,22 @@ public class Main {
             return null;
         });
 
+        get("/editar", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            Articulo a = new ArticulosServices().getArticulo(Long.parseLong(req.queryParams("id")));
+            model.put("articulo",a);
+            return new ModelAndView(model, "editarArticulo.ftl");
+        }, freeMarkerEngine);
+
+        post("/editar", (req, res) -> {
+            Articulo a = new ArticulosServices().getArticulo(Long.parseLong(req.queryParams("id")));
+            a.setTitulo(req.queryParams(("titulo")));
+            a.setCuerpo(req.queryParams("cuerpo"));
+            new ArticulosServices().actualizarArticulo(a);
+            res.redirect("/index");
+            return null;
+        });
+
         post("/borrar", (req, res) -> {
             System.out.println("Para brrar"+req.queryParams("id"));
             List<Comentario> l = new ComentariosServices().getArticulosComments(Long.parseLong(req.queryParams("id")));
@@ -123,7 +139,7 @@ public class Main {
                 new ComentariosServices().borrarComentario(c.getId());
             }
             for(Etiqueta c : e){
-                
+
                 new EtiquetaArticuloServices().borrarEtiquetaArticulo(c.getId());
             }
             new ArticulosServices().borrarArticulo(Long.parseLong(req.queryParams("id")));

@@ -89,9 +89,11 @@
                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
                         <form action="/editar" method = "POST">
+
                            <div class="row control-group " >
                                <div class="form-group col-xs-12 floating-label-form-group controls">
                                    <label>Titulo</label>
+                                    <input type="text"  value = ${articulo.getId()}  name="id" hidden/>
 
                                    <input type="text" class="form-control" value = ${articulo.getTitulo()}  name="titulo" placeholder="Titulo" id="titulo" required data-validation-required-message="introduzca el nombre del articulo">
                                    <p class="help-block text-danger"></p>
