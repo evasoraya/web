@@ -61,6 +61,9 @@ public class H2Services {
         String sqlAdmin = "INSERT INTO USUARIO (USERNAME, NOMBRE, PASSWORD, ADMINISTRADOR, AUTOR)" +
                 " VALUES ('admin', 'Administrador', 'admin', TRUE, TRUE);";
 
+        String sqlAutor = "INSERT INTO USUARIO (USERNAME, NOMBRE, PASSWORD, ADMINISTRADOR, AUTOR)" +
+                " VALUES ('autor', 'Autor', 'autor', FALSE, TRUE);";
+
         Connection con = DataBaseServices.getInstancia().getConexion();
         Statement statement = con.createStatement();
         statement.execute(sqlUsuario);
@@ -69,6 +72,7 @@ public class H2Services {
         statement.execute(sql_Etiqueta_Articulo);
         statement.execute(sqlComentario);
         statement.execute(sqlAdmin);
+        //statement.execute(sqlAutor);
         statement.close();
         con.close();
     }

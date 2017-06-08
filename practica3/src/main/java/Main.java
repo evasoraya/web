@@ -48,8 +48,6 @@ public class Main {
             for (Articulo articulo : articulos){
                 articulo.retrieveTags();
             }
-
-
             Map<String, Object> model = new HashMap<>();
             model.put("articulos", articulos);
             UsersServices usersServices = new UsersServices();
@@ -94,12 +92,8 @@ public class Main {
         }, freeMarkerEngine);
 
         get("/login", (req, res) -> {
-
             return new ModelAndView(null, "login.ftl");
         }, freeMarkerEngine);
-
-
-
 
         get("/registrar", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -194,15 +188,35 @@ public class Main {
             return null;
         });
         get("/logout",(req,res)->{
-            req.session().invalidate();
-            res.redirect("/login");
+            req.session().removeAttribute(SESSION_NAME);
+            res.removeCookie(COOKIE_NAME);
+            //req.session().invalidate();
+            res.redirect("/index");
             return null;
         });
 
         before("crearArticulo",((request, response) -> {
             Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
+            if (usuario == null || !usuario.isAutor()){
+                //halt(401, "No tiene permisos para publicar.");
+                response.redirect("/index");
+            }
+        }));
+
+        before("/registrar",((request, response) -> {
+            Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
             if (usuario == null || !usuario.isAdministrator()){
-                halt(401, "No tiene permisos para publicar.");
+                //halt(401, "No tiene permisos para registrar usuarios.");
+                response.redirect("/index");
+            }
+        }));
+
+        before("/post1/:id", ((request, response) -> {
+            int id = Integer.parseInt(request.params("id"));
+            Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
+            if (usuario == null){
+                //halt(401, "Debe iniciar sesión para comentar.");
+                response.redirect("/post/"+id);
             }
         }));
     }
