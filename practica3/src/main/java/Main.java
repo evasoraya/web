@@ -170,8 +170,15 @@ public class Main {
             model.put("articulo",a);
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
-            model.put("usuario",user.getUsername());
-            model.put("name",user.getNombre());
+            if(user==null){
+                model.put("sesion",0);
+                model.put("usuario",0);
+                model.put("name"," ");
+            }else{
+                model.put("sesion",1);
+                model.put("usuario",1);
+                model.put("name",user.getNombre());
+            }
             return new ModelAndView(model, "editarArticulo.ftl");
         }, freeMarkerEngine);
 
@@ -208,12 +215,18 @@ public class Main {
 
           String autor =req.queryParams("autor");
           String admin = req.queryParams("admin");
-          if(admin == null) admin = " ";
-          if(autor == null) autor = " ";
+
+
+
+
+
            Usuario u = new Usuario(req.queryParams("username"),req.queryParams("nombre"),
-                                               req.queryParams("password"), (admin.equals("on"))? true : false,(autor.equals("on"))? true : false
+                                               req.queryParams("password"),
+                   (admin != null )? true : false,(autor != null || admin != null )? true : false
                    );
+
             new UsersServices().crearUsuario(u);
+            System.out.println(u.getNombre()+" "+u.isAutor()+ " "+ u.isAdministrator());
 
             res.redirect("/index");
             return null;
@@ -239,9 +252,11 @@ public class Main {
 
         before("/crearArticulo",((request, response) -> {
             Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
-            if (usuario == null || !usuario.isAdministrator() || !usuario.isAutor()) {
+            if (usuario == null   || !usuario.isAutor()) {
                 //halt(401, "No tiene permisos para publicar.");
+                System.out.println("     llllllll   "+usuario.isAutor());
                 response.redirect("/index");
+
             }
 
         }));
