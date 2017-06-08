@@ -43,7 +43,7 @@
                     Menu <i class="fa fa-bars"></i>
                 </button>
 
-                <#if (usuario) ??>
+                <#if (usuario) == 1>
                     <a class="navbar-brand" href="/logout">  ${name} Logout</a>
                  </#if>
                  <#if (sesion)== 0 >

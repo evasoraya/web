@@ -54,9 +54,11 @@ public class Main {
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
             if(user==null){
                 model.put("sesion",0);
+                model.put("usuario",0);
+                model.put("name"," ");
             }else{
                 model.put("sesion",1);
-                model.put("usuario",user.getUsername());
+                model.put("usuario",1);
                 model.put("name",user.getNombre());
             }
 
@@ -68,8 +70,15 @@ public class Main {
             Map<String, Object> model = new HashMap<>();
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
-            model.put("usuario",user.getUsername());
-            model.put("name",user.getNombre());
+            if(user==null){
+                model.put("sesion",0);
+                model.put("usuario",0);
+                model.put("name"," ");
+            }else{
+                model.put("sesion",1);
+                model.put("usuario",1);
+                model.put("name",user.getNombre());
+            }
             return new ModelAndView(model, "crearArticulo.ftl");
         }, freeMarkerEngine);
 
@@ -85,8 +94,15 @@ public class Main {
             Map<String, Object> model = new HashMap<>();
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
-            model.put("usuario",user.getUsername());
-            model.put("name",user.getNombre());
+            if(user==null){
+                model.put("sesion",0);
+                model.put("usuario",0);
+                model.put("name"," ");
+            }else{
+                model.put("sesion",1);
+                model.put("usuario",1);
+                model.put("name",user.getNombre());
+            }
             model.put("articulo", articulo);
             return new ModelAndView(model, "post.ftl");
         }, freeMarkerEngine);

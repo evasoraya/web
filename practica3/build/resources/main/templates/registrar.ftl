@@ -42,9 +42,12 @@
                     <span class="sr-only">Toggle navigation</span>
                     Menu <i class="fa fa-bars"></i>
                 </button>
-                  <#if (usuario) ??>
+                  <#if (usuario) ==1>
                      <a class="navbar-brand" href="/logout">  ${name} Logout</a>
                   </#if>
+                  <#if (sesion)== 0 >
+                      <a class="navbar-brand" href="/login"> Login</a>
+                   </#if>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
