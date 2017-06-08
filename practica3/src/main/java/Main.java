@@ -19,6 +19,7 @@ public class Main {
     private static final String SESSION_NAME = "username";
     private static final String COOKIE_NAME = "user_cookie";
 
+
     public static void main(String[] args) throws IOException {
         staticFileLocation("/");
         Configuration configuration = new Configuration(Configuration.VERSION_2_3_23);
@@ -49,6 +50,7 @@ public class Main {
                 articulo.retrieveTags();
             }
             Map<String, Object> model = new HashMap<>();
+
             model.put("articulos", articulos);
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
@@ -115,8 +117,15 @@ public class Main {
             Map<String, Object> model = new HashMap<>();
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
-            model.put("usuario",user.getUsername());
-            model.put("name",user.getNombre());
+            if(user==null){
+                model.put("sesion",0);
+                model.put("usuario",0);
+                model.put("name"," ");
+            }else{
+                model.put("sesion",1);
+                model.put("usuario",1);
+                model.put("name",user.getNombre());
+            }
             return new ModelAndView(model, "registrar.ftl");
         }, freeMarkerEngine);
 
@@ -193,6 +202,23 @@ public class Main {
             return null;
         });
 
+        post("/registrar", (req, res) -> {
+            System.out.println(req.queryParams("username")+ " "+ req.queryParams("nombre")+
+                    " "+ req.queryParams("password")+" "+ req.queryParams("autor")+" "+req.queryParams("admin"));
+
+          String autor =req.queryParams("autor");
+          String admin = req.queryParams("admin");
+          if(admin == null) admin = " ";
+          if(autor == null) autor = " ";
+           Usuario u = new Usuario(req.queryParams("username"),req.queryParams("nombre"),
+                                               req.queryParams("password"), (admin.equals("on"))? true : false,(autor.equals("on"))? true : false
+                   );
+            new UsersServices().crearUsuario(u);
+
+            res.redirect("/index");
+            return null;
+        });
+
         post("/login", (req, res) -> {
             String username = req.queryParams("username");
             if(Usuario.autentificar(username,req.queryParams("password"))){
@@ -200,7 +226,7 @@ public class Main {
                 req.session().attribute(SESSION_NAME, req.queryParams("username"));
                 res.redirect("/index");
 
-             }
+             }else res.redirect("/login");
             return null;
         });
         get("/logout",(req,res)->{
@@ -211,18 +237,38 @@ public class Main {
             return null;
         });
 
-        before("crearArticulo",((request, response) -> {
+        before("/crearArticulo",((request, response) -> {
             Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
-            if (usuario == null || !usuario.isAutor()){
+            if (usuario == null || !usuario.isAdministrator() || !usuario.isAutor()) {
                 //halt(401, "No tiene permisos para publicar.");
                 response.redirect("/index");
             }
+
+        }));
+        before("/borrar",((request, response) -> {
+            Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
+            Articulo a = new ArticulosServices().getArticulo(Long.parseLong(request.queryParams("id")));
+            if (usuario == null || !usuario.isAdministrator() || !a.getAutor().getUsername().equals(usuario.getUsername())) {
+                //halt(401, "No tiene permisos para publicar.");
+                response.redirect("/index");
+            }
+
+        }));
+        before("/editar",((request, response) -> {
+            Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
+            Articulo a = new ArticulosServices().getArticulo(Long.parseLong(request.queryParams("id")));
+            if (usuario == null || !usuario.isAdministrator() || !a.getAutor().getUsername().equals(usuario.getUsername())) {
+                //halt(401, "No tiene permisos para publicar.");
+                response.redirect("/index");
+            }
+
         }));
 
         before("/registrar",((request, response) -> {
             Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
-            if (usuario == null || !usuario.isAdministrator()){
+            if (usuario == null || !usuario.isAdministrator() ){
                 //halt(401, "No tiene permisos para registrar usuarios.");
+
                 response.redirect("/index");
             }
         }));

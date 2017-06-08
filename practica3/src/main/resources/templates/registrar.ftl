@@ -42,7 +42,7 @@
                     <span class="sr-only">Toggle navigation</span>
                     Menu <i class="fa fa-bars"></i>
                 </button>
-                  <#if (usuario) ==1>
+                  <#if (sesion) ==1>
                      <a class="navbar-brand" href="/logout">  ${name} Logout</a>
                   </#if>
                   <#if (sesion)== 0 >
@@ -92,28 +92,64 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                 <form name="registrar" id="registrar" >
+                 <form action = "/registrar" method="POST" name="registrar" id="registrar" >
+
                     <div class="row control-group">
                         <div class="form-group col-xs-12 floating-label-form-group controls">
                             <label>Nombre</label>
-                            <input type="text" class="form-control" placeholder="nombre" id="nombre" required data-validation-required-message="introduzca su nombre.">
+                            <input type="text" class="form-control" placeholder="Nombre" name="nombre" required data-validation-required-message="introduzca su nombre.">
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
+
                     <div class="row control-group">
                         <div class="form-group col-xs-12 floating-label-form-group controls">
                             <label>Username</label>
-                            <input type="text" class="form-control" placeholder="username" id="username" required data-validation-required-message="introduzca su username.">
+                            <input type="text" class="form-control" placeholder="Username" name="username" required data-validation-required-message="introduzca su username.">
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
                     <div class="row control-group">
                         <div class="form-group col-xs-12 floating-label-form-group controls">
                             <label>Password</label>
-                            <input type="text" class="form-control" placeholder="password" id="password" required data-validation-required-message="passworkd.">
+                            <input type="text" class="form-control" placeholder="Password" name="password" required data-validation-required-message="passworkd.">
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
+
+                     <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <div class="row">
+                               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                   ¿Es el Usuario Autor?
+                               </div>
+                               <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                   <input name="autor" type="checkbox">
+                               </div>
+                           </div>
+
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                             <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                    ¿Es el Usuario Admin?
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                    <input name="admin" type="checkbox">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+
+
+
 
                     <br>
                     <div id="success"></div>

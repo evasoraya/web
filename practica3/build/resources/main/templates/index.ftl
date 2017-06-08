@@ -129,7 +129,14 @@
                     <h5> Posted by: ${a.getAutor().getNombre()}, ${ a.getFecha()} </h5>
 
                     <h4 class="post-subtitle">
-                       ${a.getCuerpo()}
+                      <i class="post-subtitle">
+                                                 <#assign cuerpo=a.cuerpo>
+                                                 <#if cuerpo?length &lt; 70>
+                                                     ${cuerpo}
+                                                 <#else>
+                                                     ${cuerpo?substring(0,70) + "..."}
+                                                 </#if>
+                                             </i>
                        <br>
 
 
