@@ -65,7 +65,6 @@ public class Usuario {
         List<Usuario> usuarios;
         UsersServices usersServices = new UsersServices();
         usuarios = usersServices.listaUsuarios();
-        System.out.println("Usuarios size: " + usuarios.size());
         for(Usuario u : usuarios){
             if(username.equals(u.getUsername()) && password.equals(u.getPassword())) {
                 return true;
