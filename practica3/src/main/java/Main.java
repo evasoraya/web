@@ -151,6 +151,7 @@ public class Main {
             a.setTitulo(req.queryParams(("titulo")));
             a.setCuerpo(req.queryParams("cuerpo"));
             String [] eti = req.queryParams("etiquetas").split(",");
+
             EtiquetaArticulo.crearRelaciones(eti,a);
             new ArticulosServices().actualizarArticulo(a);
             res.redirect("/index");
@@ -175,9 +176,6 @@ public class Main {
         });
 
         post("/registrar", (req, res) -> {
-            System.out.println(req.queryParams("username")+ " "+ req.queryParams("nombre")+
-                    " "+ req.queryParams("password")+" "+ req.queryParams("autor")+" "+req.queryParams("admin"));
-
             String autor =req.queryParams("autor");
             String admin = req.queryParams("admin");
 
@@ -185,8 +183,6 @@ public class Main {
                                                req.queryParams("password"),
                    admin != null,autor != null || admin != null);
             new UsersServices().crearUsuario(u);
-            System.out.println(u.getNombre()+" "+u.isAutor()+ " "+ u.isAdministrator());
-
             res.redirect("/index");
             return null;
         });
@@ -197,7 +193,6 @@ public class Main {
                 res.cookie(COOKIE_NAME, username, 3600);
                 req.session().attribute(SESSION_NAME, req.queryParams("username"));
                 res.redirect("/index");
-
              }else{
                 res.redirect("/login");
             }
@@ -213,32 +208,21 @@ public class Main {
 
         before("/crearArticulo",((request, response) -> {
             Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
-
-
             if (usuario == null ||  !usuario.isAutor()) {
-
-                //halt(401, "No tiene permisos para publicar.");
-              //  System.out.println("     llllllll   "+ usuario.isAutor());
                 response.redirect("/index");
-
             }
-
         }));
         before("/borrar",((request, response) -> {
             Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
             Articulo a = new ArticulosServices().getArticulo(Long.parseLong(request.queryParams("id")));
             if (usuario == null || !usuario.isAdministrator() && !usuario.isAutor()) {
-                //halt(401, "No tiene permisos para publicar.");
                 response.redirect("/index");
             }
 
         }));
         before("/editar",((request, response) -> {
             Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
-            Articulo a = new ArticulosServices().getArticulo(Long.parseLong(request.queryParams("id")));
-
             if (usuario == null || !usuario.isAutor()) {
-                //halt(401, "No tiene permisos para publicar.");
                 response.redirect("/index");
             }
 
@@ -257,7 +241,6 @@ public class Main {
             int id = Integer.parseInt(request.params("id"));
             Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
             if (usuario == null){
-                //halt(401, "Debe iniciar sesión para comentar.");
                 response.redirect("/post/"+id);
             }
         }));

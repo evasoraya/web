@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -42,9 +43,24 @@ public class EtiquetaArticulo {
     }
 
     public static void crearRelaciones(String[] eti, Articulo articulo) {
-        List<String> tags = Arrays.asList(eti);
+        List<String> tags = new LinkedList<>(Arrays.asList(eti));
         EtiquetasServices etiquetasServices =  new EtiquetasServices();
         List<Etiqueta> etiquetas = etiquetasServices.listaEtiquetas();
+
+        ArrayList<String> toRemove = new ArrayList<>();
+
+        if (articulo.getEtiquetas().size() != 0){
+            for (Etiqueta e : articulo.getEtiquetas()){
+                for (String s : tags){
+                    if (e.getEtiqueta().equals(s)){
+                        toRemove.add(s);
+                        //tags.remove(s);
+                    }
+                }
+            }
+        }
+
+        tags.removeAll(toRemove);
 
         for (String s : tags){
             boolean there = false;

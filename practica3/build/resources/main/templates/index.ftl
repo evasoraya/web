@@ -82,7 +82,7 @@
 
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header" style="background-image: url('img/home-bg.jpg')">
+    <header class="intro-header" style="background-image: url('img/code.jpeg')">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -152,12 +152,12 @@
                 <hr>
 
                 <hr>
-                <!-- Pager -->
+                <#--<!-- Pager &ndash;&gt;
                 <ul class="pager">
                     <li class="next">
                         <a href="#">Older Posts &rarr;</a>
                     </li>
-                </ul>
+                </ul>-->
             </div>
         </div>
     </div>
