@@ -97,7 +97,7 @@ public class Main {
         }, freeMarkerEngine);
 
         post("/crearArticulo", (req, res) -> {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss z");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a");
             Date current = new Date();
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
@@ -214,7 +214,8 @@ public class Main {
         }));
         before("/borrar",((request, response) -> {
             Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
-            if (usuario == null || !usuario.isAdministrator() && !usuario.isAutor()) {
+            if (usuario == null || !usuario.isAutor()) {
+                halt(401, "No puedes borrar sin iniciar sesión!");
                 response.redirect("/index");
             }
 
@@ -230,7 +231,6 @@ public class Main {
         before("/registrar",((request, response) -> {
             Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
             if (usuario == null || !usuario.isAdministrator() ){
-                //halt(401, "No tiene permisos para registrar usuarios.");
 
                 response.redirect("/index");
             }

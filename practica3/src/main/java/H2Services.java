@@ -69,7 +69,11 @@ public class H2Services {
         statement.execute(sqlEtiqueta);
         statement.execute(sql_Etiqueta_Articulo);
         statement.execute(sqlComentario);
-        statement.execute(sqlAdmin);
+        try {
+            statement.execute(sqlAdmin);
+        } catch (SQLException e) {
+            //e.printStackTrace();
+        }
         statement.close();
         con.close();
     }
