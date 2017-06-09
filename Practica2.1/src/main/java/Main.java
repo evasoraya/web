@@ -24,7 +24,7 @@ public class Main {
         configuration.setClassForTemplateLoading(Main.class, "/templates");
         FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine(configuration);
         ;
-
+        port(4568);
         get("/home", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("estudiantes", estudiantes);
@@ -38,25 +38,18 @@ public class Main {
 
         get("/editar", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            System.out.println(req.queryParams("Matricula").replace(",", ""));
-            Estudiante es = buscarEstudiante(Integer.parseInt(req.queryParams("Matricula").replace(",", "")));
+            System.out.println(req.queryParams("matricula").replace(",", ""));
+            Estudiante es = buscarEstudiante(Integer.parseInt(req.queryParams("matricula").replace(",", "")));
             model.put("estudiante", es);
             return new ModelAndView(model, "editar.ftl");
         }, freeMarkerEngine);
 
-        get("/borrar", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            System.out.println(req.queryParams("Matricula").replace(",", ""));
-            Estudiante es = buscarEstudiante(Integer.parseInt(req.queryParams("Matricula").replace(",", "")));
-            model.put("estudiante", es);
-            res.redirect("/home");
-            return null;
-        }, freeMarkerEngine);
+
 
         get("/ver", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
 
-            Estudiante es = buscarEstudiante(Integer.parseInt(req.queryParams("Matricula").replace(",", "")));
+            Estudiante es = buscarEstudiante(Integer.parseInt(req.queryParams("matricula").replace(",", "")));
             model.put("estudiante", es);
             return  new ModelAndView(model,"ver.ftl");
         }, freeMarkerEngine);
@@ -81,8 +74,8 @@ public class Main {
             res.redirect("/home");
             return null;
         });
-        post("/borrar", (req, res) -> {
-            int es =  Integer.parseInt(req.queryParams("telefono").replace(",", ""));
+        get("/borrar", (req, res) -> {
+            int es =  Integer.parseInt(req.queryParams("matricula").replace(",", ""));
             borrarEstudiante(es);
             res.redirect("/home");
             return null;
@@ -124,17 +117,13 @@ public class Main {
 
     private static void borrarEstudiante(int es) {
 
-        for (Estudiante e : estudiantes) {
-            System.out.println(e.getMatricula() + "  " + e);
-            if (e.getMatricula() == es) {
-                estudiantes.remove(e);
-                // e.setMatricula(es.getMatricula());
-                //return "se ha hecho su cambio";
+        for (int i = 0; i < estudiantes.size(); i++) {
+            System.out.println(estudiantes.get(i).getMatricula() + "  " + estudiantes.get(i));
 
+            if (estudiantes.get(i).getMatricula() == es) {
+                estudiantes.remove(estudiantes.get(i));
             }
 
-            // return "se ha hecho su cambio"
-            //  return "Error";
         }
 
     }
