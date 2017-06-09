@@ -254,10 +254,10 @@ public class Main {
             Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
 
 
-            if (usuario == null || !usuario.isAdministrator() && !usuario.isAutor()) {
+            if (usuario == null ||  !usuario.isAutor()) {
 
                 //halt(401, "No tiene permisos para publicar.");
-                System.out.println("     llllllll   "+usuario.isAutor());
+                System.out.println("     llllllll   "+ usuario.isAutor());
                 response.redirect("/index");
 
             }
@@ -275,7 +275,8 @@ public class Main {
         before("/editar",((request, response) -> {
             Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
             Articulo a = new ArticulosServices().getArticulo(Long.parseLong(request.queryParams("id")));
-            if (usuario == null || !usuario.isAdministrator() && !usuario.isAutor()) {
+
+            if (usuario == null || !usuario.isAdministrator() || !usuario.isAutor()) {
                 //halt(401, "No tiene permisos para publicar.");
                 response.redirect("/index");
             }
