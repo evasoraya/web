@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Clean Blog</title>
+    <title>Tecno Blog</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -67,9 +67,7 @@
                     <li>
                         <a href="/crearArticulo">Crear Articulo</a>
                     </li>
-                    <li>
-                        <a href="/post">Post</a>
-                    </li>
+
                     <li>
                         <a href="/registrar">Registrar</a>
                     </li>
@@ -102,9 +100,11 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-preview">
                 <#list articulos as a>
-
+                    <br>
                     <a href="/post/${a.getId()}">
-                        <h2 class="post-title"> ${a.getTitulo()} </h2> </a>
+                        <h2 class="post-title col-xl"> ${a.getTitulo()} </h2> </a>
+                        <hr size="30">
+
 
                         <form method="POST">
                             <button formaction="/borrar" value="${a.getId()}" style = "background-color: white;border-style:none; color: black" type="submit" class="btn btn-primary">
@@ -116,15 +116,6 @@
 
                                                     <input name="id" value="${a.getId()}" hidden />
                             </form>
-
-
-
-
-
-
-
-
-
 
                     <h5> Posted by: ${a.getAutor().getNombre()}, ${ a.getFecha()} </h5>
 
@@ -138,28 +129,16 @@
                          </#if>
                      </i>
                        <br>
-
-
-
                     </h4>
                     <#list a.getEtiquetas() as e>
-                      <input  name="etiquetas" style= "background-color: #EFEBE9; color: black; border-radius: 7px" type="text" value="${e.getEtiqueta()}" data-role="tagsinput" disabled/>
+                      <input class="col-xs-3 " name="etiquetas" size="4" style= "background-color: #EFEBE9; color: black; border-radius: 7px" type="text" value="${e.getEtiqueta()}" data-role="tagsinput" disabled/>
                       </#list>
 
 
 
                 </#list>
                 </div>
-
                 <hr>
-
-                <hr>
-                <#--<!-- Pager &ndash;&gt;
-                <ul class="pager">
-                    <li class="next">
-                        <a href="#">Older Posts &rarr;</a>
-                    </li>
-                </ul>-->
             </div>
         </div>
     </div>

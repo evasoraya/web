@@ -121,9 +121,19 @@
 
     </form>
     <br>
-     <#list articulo.getEtiquetas() as e>
-        <input  name="etiquetas" type="text" value="${e.getEtiqueta()}" data-role="tagsinput" disabled/>
-     </#list>
+    <br>
+
+    <div class="container">
+         <div class="row">
+            <div class="col-6 col-sm-3">
+                    <label>Etiqueta</label>
+                    <br>
+                 <#list articulo.getEtiquetas() as e>
+                    <input class="col-xs-7 " size="7" style= "background-color: #EFEBE9; color: black; border-radius: 7px"  name="etiquetas" type="text" value="${e.getEtiqueta()}" data-role="tagsinput" disabled/>
+                 </#list>
+             </div>
+          </div>
+     </div>
 
     <hr>
 

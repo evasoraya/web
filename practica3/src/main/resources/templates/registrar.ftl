@@ -119,7 +119,7 @@
                         <div class="form-group col-xs-12 floating-label-form-group controls">
                             <div class="row">
                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                   ¿Es el Usuario Autor?
+                                  <p class="help-block text-danger" >¿Es el Usuario Autor?</p>
                                </div>
                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
                                    <input name="autor" type="checkbox">
@@ -132,7 +132,7 @@
                         <div class="form-group col-xs-12 floating-label-form-group controls">
                              <div class="row">
                                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                    ¿Es el Usuario Admin?
+                                    <p class="help-block text-danger" >¿Es el Usuario Admin?</p>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
                                     <input name="admin" type="checkbox">
