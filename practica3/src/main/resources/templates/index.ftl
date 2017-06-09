@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Clean Blog</title>
+    <title>Tecno Blog</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -117,15 +117,6 @@
                                                     <input name="id" value="${a.getId()}" hidden />
                             </form>
 
-
-
-
-
-
-
-
-
-
                     <h5> Posted by: ${a.getAutor().getNombre()}, ${ a.getFecha()} </h5>
 
                     <h4 class="post-subtitle">
@@ -138,9 +129,6 @@
                          </#if>
                      </i>
                        <br>
-
-
-
                     </h4>
                     <#list a.getEtiquetas() as e>
                       <input  name="etiquetas" style= "background-color: #EFEBE9; color: black; border-radius: 7px" type="text" value="${e.getEtiqueta()}" data-role="tagsinput" disabled/>
@@ -150,16 +138,7 @@
 
                 </#list>
                 </div>
-
                 <hr>
-
-                <hr>
-                <#--<!-- Pager &ndash;&gt;
-                <ul class="pager">
-                    <li class="next">
-                        <a href="#">Older Posts &rarr;</a>
-                    </li>
-                </ul>-->
             </div>
         </div>
     </div>
