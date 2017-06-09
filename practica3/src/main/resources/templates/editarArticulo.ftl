@@ -59,9 +59,7 @@
                     <li>
                         <a href="/crearArticulo">Crear articulo</a>
                     </li>
-                    <li>
-                        <a href="/post">post</a>
-                    </li>
+
                     <li>
                         <a href="/registrar">Registrar</a>
                     </li>

@@ -58,9 +58,7 @@
                    <li>
                        <a href="/crearArticulo">Crear Articulo</a>
                    </li>
-                   <li>
-                       <a href="/post">Post</a>
-                   </li>
+
                    <li>
                        <a href="/registrar">Registrar</a>
                    </li>
@@ -122,6 +120,7 @@
         <button type="submit" class="btn btn-default">Send</button>
 
     </form>
+    <br>
      <#list articulo.getEtiquetas() as e>
         <input  name="etiquetas" type="text" value="${e.getEtiqueta()}" data-role="tagsinput" disabled/>
      </#list>

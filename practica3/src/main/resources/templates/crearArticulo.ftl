@@ -59,9 +59,7 @@
                     <li>
                         <a href="/crearArticulo">Crear articulo</a>
                     </li>
-                    <li>
-                        <a href="/post">post</a>
-                    </li>
+
                     <li>
                         <a href="/registrar">Registrar</a>
                     </li>
@@ -111,7 +109,7 @@
                            <div class="row control-group ">
                                <div class="form-group col-xs-12 floating-label-form-group controls">
                                    <label>Etiquetas</label>
-                                   <input  name="etiquetas" type="text" placeholder="Etiquetas" data-role="tagsinput" />
+                                   <textarea  name="etiquetas" type="text" placeholder="Etiquetas" class="form-control" rows="4" cols="50" ></textarea>
                                    <p class="help-block text-danger"></p>
                                </div>
                            </div>

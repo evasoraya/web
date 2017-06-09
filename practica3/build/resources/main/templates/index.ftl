@@ -130,21 +130,23 @@
 
                     <h4 class="post-subtitle">
                       <i class="post-subtitle">
-                                                 <#assign cuerpo=a.cuerpo>
-                                                 <#if cuerpo?length &lt; 70>
-                                                     ${cuerpo}
-                                                 <#else>
-                                                     ${cuerpo?substring(0,70) + "..."}
-                                                 </#if>
-                                             </i>
+                         <#assign cuerpo=a.cuerpo>
+                         <#if cuerpo?length &lt; 70>
+                             ${cuerpo}
+                         <#else>
+                             ${cuerpo?substring(0,70) + "..."}
+                         </#if>
+                     </i>
                        <br>
 
 
 
                     </h4>
                     <#list a.getEtiquetas() as e>
-                      <input  name="etiquetas" type="text" value="${e.getEtiqueta()}" data-role="tagsinput" disabled/>
+                      <input  name="etiquetas" style= "background-color: #EFEBE9; color: black; border-radius: 7px" type="text" value="${e.getEtiqueta()}" data-role="tagsinput" disabled/>
                       </#list>
+
+
 
                 </#list>
                 </div>
