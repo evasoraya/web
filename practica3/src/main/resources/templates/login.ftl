@@ -67,7 +67,7 @@
 
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header" style="background-image: url('img/background-20.jpg')">
+    <header class="intro-header" style="background-image: url('img/vector.jpg')">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -84,8 +84,7 @@
                                    <form role="form" method="POST" action="/login" class="inline">
 
                                        <div class="row">
-
-                                           <div class="col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-4 col-sm-offset-4 col-col-sm-6 col-xs-12">
+                                           <div style="color:#FFFFFF;" class="col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-4 col-sm-offset-4 col-col-sm-6 col-xs-12">
                                                <strong>Nombre de Usuario:</strong>
                                            </div>
                                            <div class="col-lg-3 col-md-3 col-sm-5 col-xs-12">

@@ -3,7 +3,6 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.template.freemarker.FreeMarkerEngine;
 
-import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -54,15 +53,7 @@ public class Main {
             model.put("articulos", articulos);
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
-            if(user==null){
-                model.put("sesion",0);
-                model.put("usuario",0);
-                model.put("name"," ");
-            }else{
-                model.put("sesion",1);
-                model.put("usuario",1);
-                model.put("name",user.getNombre());
-            }
+            checkModelUser(user, model);
 
             return new ModelAndView(model, "index.ftl");
         }, freeMarkerEngine);
@@ -72,15 +63,7 @@ public class Main {
             Map<String, Object> model = new HashMap<>();
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
-            if(user==null){
-                model.put("sesion",0);
-                model.put("usuario",0);
-                model.put("name"," ");
-            }else{
-                model.put("sesion",1);
-                model.put("usuario",1);
-                model.put("name",user.getNombre());
-            }
+            checkModelUser(user, model);
             return new ModelAndView(model, "crearArticulo.ftl");
         }, freeMarkerEngine);
 
@@ -96,15 +79,7 @@ public class Main {
             Map<String, Object> model = new HashMap<>();
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
-            if(user==null){
-                model.put("sesion",0);
-                model.put("usuario",0);
-                model.put("name"," ");
-            }else{
-                model.put("sesion",1);
-                model.put("usuario",1);
-                model.put("name",user.getNombre());
-            }
+            checkModelUser(user, model);
             model.put("articulo", articulo);
             return new ModelAndView(model, "post.ftl");
         }, freeMarkerEngine);
@@ -117,15 +92,7 @@ public class Main {
             Map<String, Object> model = new HashMap<>();
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
-            if(user==null){
-                model.put("sesion",0);
-                model.put("usuario",0);
-                model.put("name"," ");
-            }else{
-                model.put("sesion",1);
-                model.put("usuario",1);
-                model.put("name",user.getNombre());
-            }
+            checkModelUser(user, model);
             return new ModelAndView(model, "registrar.ftl");
         }, freeMarkerEngine);
 
@@ -164,7 +131,6 @@ public class Main {
             checkCookies(req);
             Map<String, Object> model = new HashMap<>();
             Articulo a = new ArticulosServices().getArticulo(Long.parseLong(req.queryParams("id")));
-
             a.retrieveTags();
 
             model.put("articulo",a);
@@ -175,15 +141,7 @@ public class Main {
             model.put("etiquetas",etiquetas);
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
-            if(user==null){
-                model.put("sesion",0);
-                model.put("usuario",0);
-                model.put("name"," ");
-            }else{
-                model.put("sesion",1);
-                model.put("usuario",1);
-                model.put("name",user.getNombre());
-            }
+            checkModelUser(user, model);
             return new ModelAndView(model, "editarArticulo.ftl");
         }, freeMarkerEngine);
 
@@ -220,18 +178,12 @@ public class Main {
             System.out.println(req.queryParams("username")+ " "+ req.queryParams("nombre")+
                     " "+ req.queryParams("password")+" "+ req.queryParams("autor")+" "+req.queryParams("admin"));
 
-          String autor =req.queryParams("autor");
-          String admin = req.queryParams("admin");
+            String autor =req.queryParams("autor");
+            String admin = req.queryParams("admin");
 
-
-
-
-
-           Usuario u = new Usuario(req.queryParams("username"),req.queryParams("nombre"),
+            Usuario u = new Usuario(req.queryParams("username"),req.queryParams("nombre"),
                                                req.queryParams("password"),
-                   (admin != null )? true : false,(autor != null || admin != null )? true : false
-                   );
-
+                   admin != null,autor != null || admin != null);
             new UsersServices().crearUsuario(u);
             System.out.println(u.getNombre()+" "+u.isAutor()+ " "+ u.isAdministrator());
 
@@ -246,7 +198,9 @@ public class Main {
                 req.session().attribute(SESSION_NAME, req.queryParams("username"));
                 res.redirect("/index");
 
-             }else res.redirect("/login");
+             }else{
+                res.redirect("/login");
+            }
             return null;
         });
         get("/logout",(req,res)->{
@@ -307,6 +261,18 @@ public class Main {
                 response.redirect("/post/"+id);
             }
         }));
+    }
+
+    private static void checkModelUser(Usuario user, Map<String, Object> model) {
+        if(user==null){
+            model.put("sesion",0);
+            model.put("usuario",0);
+            model.put("name"," ");
+        }else{
+            model.put("sesion",1);
+            model.put("usuario",1);
+            model.put("name",user.getNombre());
+        }
     }
 
     private static void checkCookies(Request req) {
