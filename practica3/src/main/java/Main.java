@@ -191,7 +191,7 @@ public class Main {
             String username = req.queryParams("username");
             if(Usuario.autentificar(username,req.queryParams("password"))){
                 res.cookie(COOKIE_NAME, username, 3600);
-                req.session().attribute(SESSION_NAME, req.queryParams("username"));
+                req.session().attribute(SESSION_NAME, username);
                 res.redirect("/index");
              }else{
                 res.redirect("/login");
@@ -214,7 +214,6 @@ public class Main {
         }));
         before("/borrar",((request, response) -> {
             Usuario usuario = new UsersServices().getUsuario(request.session().attribute(SESSION_NAME));
-            Articulo a = new ArticulosServices().getArticulo(Long.parseLong(request.queryParams("id")));
             if (usuario == null || !usuario.isAdministrator() && !usuario.isAutor()) {
                 response.redirect("/index");
             }

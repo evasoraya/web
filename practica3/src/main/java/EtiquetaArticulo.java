@@ -46,7 +46,6 @@ public class EtiquetaArticulo {
         List<String> tags = new LinkedList<>(Arrays.asList(eti));
         EtiquetasServices etiquetasServices =  new EtiquetasServices();
         List<Etiqueta> etiquetas = etiquetasServices.listaEtiquetas();
-
         ArrayList<String> toRemove = new ArrayList<>();
 
         if (articulo.getEtiquetas().size() != 0){
@@ -54,14 +53,12 @@ public class EtiquetaArticulo {
                 for (String s : tags){
                     if (e.getEtiqueta().equals(s)){
                         toRemove.add(s);
-                        //tags.remove(s);
                     }
                 }
             }
         }
 
         tags.removeAll(toRemove);
-
         for (String s : tags){
             boolean there = false;
             if (etiquetas.size() != 0){
@@ -81,7 +78,6 @@ public class EtiquetaArticulo {
             }
         }
 
-       //etiquetas = new EtiquetasServices().listaEtiquetas();
         for (String s : tags){
             for(Etiqueta e : etiquetas){
                 if (s.equals(e.getEtiqueta())){
@@ -104,7 +100,6 @@ public class EtiquetaArticulo {
                 }
             }
         }
-
         return etiquetas;
     }
 }

@@ -167,10 +167,6 @@ public class EtiquetaArticuloServices {
             //Ejecuto...
             ResultSet rs = prepareStatement.executeQuery();
             while(rs.next()){
-                /*ea = new EtiquetaArticulo();
-                ea.setId(rs.getInt("ID"));
-                ea.setIdEtiqueta(rs.getLong("ID_ETIQUETA"));
-                ea.setIdArticulo(rs.getLong("ID_ARTICULO"));*/
                 etiquetasID.add(rs.getLong("ID_ETIQUETA"));
             }
         } catch (SQLException ex) {

@@ -33,6 +33,7 @@ public class ComentariosServices {
     /**
      *
      * @param id
+     * ID del usuario
      * @return comentario
      */
     public Comentario getComentario(int id) {
