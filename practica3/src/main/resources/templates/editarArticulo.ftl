@@ -114,10 +114,10 @@
                            <div class="row control-group ">
                                <div class="form-group col-xs-12 floating-label-form-group controls">
                                    <label>Etiquetas</label>
-                                   <#list articulo.etiquetas as e >
-                                       <input  name="etiquetas" type="text" value="${e.etiqueta}" placeholder="Etiquetas" data-role="tagsinput" />
+
+                                       <input  name="etiquetas" type="text" value="${etiquetas}" placeholder="Etiquetas" data-role="tagsinput" />
                                        <p class="help-block text-danger"></p>
-                                    </#list>
+
 
                                </div>
                            </div>

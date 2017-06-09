@@ -168,6 +168,11 @@ public class Main {
             a.retrieveTags();
 
             model.put("articulo",a);
+            String etiquetas="";
+            for(Etiqueta e : a.getEtiquetas()){
+                etiquetas+=(e.getEtiqueta()+",");
+            }
+            model.put("etiquetas",etiquetas);
             UsersServices usersServices = new UsersServices();
             Usuario user = usersServices.getUsuario(req.session().attribute(SESSION_NAME));
             if(user==null){
@@ -187,6 +192,8 @@ public class Main {
             a.retrieveTags();
             a.setTitulo(req.queryParams(("titulo")));
             a.setCuerpo(req.queryParams("cuerpo"));
+            String [] eti = req.queryParams("etiquetas").split(",");
+            EtiquetaArticulo.crearRelaciones(eti,a);
             new ArticulosServices().actualizarArticulo(a);
             res.redirect("/index");
             return null;
